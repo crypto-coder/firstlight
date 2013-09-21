@@ -1,7 +1,9 @@
 
 
 
-#root{
+#fxmlShell{
+	
+	-fx-background-color:#aaaaFF;
 }
 
 
