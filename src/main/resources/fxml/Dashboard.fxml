@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root type="AnchorPane" prefHeight="200.0" prefWidth="371.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.puremoneysystems.firstlight.DashboardController">
+  <children>
+    <Label text="Number of I2P Peers" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="72.0" />
+    <Label text="Number of TOR Peers" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="92.0" />
+    <Label text="Open Transactions Server Status" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="19.0" />
+    <Label text="Number of HTTPS Peers" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="52.0" />
+    <Label fx:id="httpsPeerCount" text="0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="52.0" />
+    <Label fx:id="otServerStatus" minWidth="200.0" prefWidth="-1.0" text="" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="19.0" />
+    <Label fx:id="i2pPeerCount" text="0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="72.0" />
+    <Label fx:id="torPeerCount" text="0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="92.0" />
+  </children>
+</fx:root>

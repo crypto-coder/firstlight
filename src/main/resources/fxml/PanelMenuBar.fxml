@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.HBox?>
+<?import com.puremoneysystems.firstlight.menu.PanelMenuItem ?>
+<?import com.puremoneysystems.firstlight.menu.PanelMenuItem?>
+
+
+<fx:root type="HBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <PanelMenuItem labelText="Test 1" image="../images/Bank.png" />
+  </children>
+</fx:root>

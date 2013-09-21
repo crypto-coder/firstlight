@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.StackPane?>
+
+<fx:root type="StackPane" prefHeight="100.0" prefWidth="100.0" styleClass="flMenuItem" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <ImageView id="panelMenuItemImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" styleClass="menuItemImage">
+      <image>
+        <Image url="@../images/eye.png" />
+      </image>
+    </ImageView>
+    <Label id="panelMenuItemLabel" alignment="CENTER" styleClass="menuItemLabel" text="Label" StackPane.alignment="BOTTOM_CENTER" />
+  </children>
+  <stylesheets>
+    <URL value="@../style/menu.css" />
+  </stylesheets>
+</fx:root>

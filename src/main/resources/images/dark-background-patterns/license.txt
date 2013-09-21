@@ -1,0 +1,21 @@
+/* License
+------------------------------------------------------------ */
+
+TERMS OF USE:
+
+This work is licensed under the GNU General Public License v2.0.
+
+To view a copy of this license, visit http://www.opensource.org/licenses/gpl-license.php.
+
+If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
+
+We believe in Karma. If you use any of these graphics for your own projects, a linkback to us will go a long way.
+
+
+/* Development
+------------------------------------------------------------ */
+
+The StudioPress Team
+
+http://www.studiopress.com
+http://www.copyblogger.com

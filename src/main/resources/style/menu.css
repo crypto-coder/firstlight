@@ -1,0 +1,62 @@
+
+
+.flMenuItem{
+	-fx-border-width: 1px;
+	-fx-border-color:#000000;
+	-fx-border-radius: 20px;
+	-fx-background-radius: 20px;
+	-fx-background-image: url('../images/background-iOS_light_grey_linen.png');
+	-fx-background-repeat: repeat;
+	-fx-background-size: cover;
+	-fx-skin: 'com.puremoneysystems.firstlight.menu.MenuItemSkin';
+}
+
+.flMenuItem .menuItemImage{
+	
+}
+
+.flMenuItem .menuItemLabel{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+#mainMenuBar{}
+
+
+
+
+#walletMenu{}
+#openWalletMenuItem{}
+
+
+
+
+#currencyMenu{
+	-fx-background-color: #FF0000;}
+#showCurrencySummaryMenuItem{
+	-fx-background-color: #FF0000;}
+
+
+
+
+#connectionsMenu{}
+#showConnectionsSummaryMenuItem{}
+
+
+
+
+#currentContextMenu{}
+#backMenuItem{}
+
+
+            
+           

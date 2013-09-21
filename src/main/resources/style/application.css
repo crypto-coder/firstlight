@@ -1,0 +1,114 @@
+
+
+
+#root{
+}
+
+
+#navigationRegion{
+	-fx-background-color:#aaaaFF;
+}
+
+
+#activeScreenRegion{
+	-fx-background-color:#aaFFaa;
+}
+
+#defaultScreen{
+}
+
+#notificationRegion{
+	-fx-background-color:#FFaaaa;
+}
+
+#currentNotification{}
+
+
+
+/*
+ * 
+ * 
+ * 
+	id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.puremoneysystems.firstlight.SampleController"> 
+	    <AnchorPane id="topMenu" layoutX="0.0" layoutY="0.0" minHeight="-Infinity" prefHeight="100.0" prefWidth="-1.0">
+	        <MenuBar id="mainMenuBar" layoutX="0.0" layoutY="0.0" prefHeight="100.0" prefWidth="900.0">
+	            <Menu id="walletMenu" mnemonicParsing="false" text="">
+	                <CustomMenuItem id="openWalletMenuItem" mnemonicParsing="false" text="" />
+	            <Menu id="currencyMenu" mnemonicParsing="false" text="">
+	                <CustomMenuItem id="showCurrencySummaryMenuItem" mnemonicParsing="false" text="" />
+	            <Menu id="connectionsMenu" mnemonicParsing="false" text="">
+	                <CustomMenuItem id="showConnectionsSummaryMenuItem" mnemonicParsing="false" text="" />
+	            <Menu id="currentContextMenu" mnemonicParsing="false" text="">
+	                <CustomMenuItem id="backMenuItem" mnemonicParsing="false" text="" />
+	    <AnchorPane id="activeScreenContainer" prefHeight="480.0" prefWidth="900.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+	        <Pane id="activeScreen" layoutX="445.0" layoutY="235.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="10.0" />
+	    <GridPane id="statusBar" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+	        <HBox prefHeight="-1.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+	        <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+	            <Label id="currentStatusMessage" prefHeight="20.0" prefWidth="686.0" text="Label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+*
+*
+*/ 
+            
+            
+            
+            
+.root {
+    -fx-font-family: "Droid Sans Georgian";
+    -fx-font-size: 11.624203821656051px;
+    -fx-background-image: url('../images/background-small_black_dot.png');
+    -fx-background-repeat: repeat;
+}
+.button, .toggle-button, .choice-box {
+    -fx-background-radius: 2, 2, 1, 0;
+    -fx-padding: 5px 12px 5px 12px;
+}
+.menu-button {
+    -fx-background-radius: 2, 2, 1, 0;
+}
+.menu-button .label {
+    -fx-padding: 5px 20px 5px 12px;
+}
+.menu-button .arrow-button {
+    -fx-padding: 5px 8px 5px 0px;
+}
+.choice-box {
+    -fx-padding: 0 8px 0 0;
+}
+.choice-box .label {
+    -fx-padding: 5px 6px 5px 8px;
+}
+.choice-box .open-button {
+    -fx-padding: 1 0 0 10px;
+}
+.combo-box-base:editable .text-field, .combo-box-base .arrow-button, .combo-box .list-cell {
+    -fx-padding: 5px 8px 5px 8px;
+}
+.check-box .box {
+    -fx-padding: 0.25em;
+}
+.radio-button .radio {
+    -fx-padding: 0.333333em;
+}
+.label, .check-box, .radio-button {
+    -fx-text-fill: -fx-text-background-color;
+}
+.button, .toggle-button, .check-box .box, .radio-button .radio, .choice-box, .menu-button, .tab, .combo-box-base {
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+}
+.button:focused, .toggle-button:focused, .check-box:focused .box, .radio-button:focused .radio, .choice-box:focused, .menu-button:focused, .combo-box-base:focused {
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+.combo-box-base .arrow-button {
+    -fx-background-insets: 0, 1, 2;
+}
+.choice-box .label { /* Workaround for RT-20015 */
+    -fx-text-fill: -fx-text-base-color;
+}
+.menu-button .label { /* Workaround for RT-20015 */
+    -fx-text-fill: -fx-text-base-color;
+}
+            
+            
+            
+            
