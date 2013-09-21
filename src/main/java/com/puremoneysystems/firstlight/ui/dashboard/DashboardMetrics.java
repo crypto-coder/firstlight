@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.puremoneysystems.firstlight;
+package com.puremoneysystems.firstlight.ui.dashboard;
 
 import org.jrebirth.core.ui.fxml.*;
 import org.slf4j.Logger;
@@ -54,7 +54,15 @@ public final class DashboardMetrics extends DefaultFXMLModel<DashboardMetrics> {
     	this.torPeerCount.set(0);   
     }
     
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getFXMLPath() {
+        return "/fxml/Dashboard.fxml";
+    }
+
 
     /**
      * {@inheritDoc}

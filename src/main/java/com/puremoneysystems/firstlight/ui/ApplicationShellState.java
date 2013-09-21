@@ -1,4 +1,8 @@
-package com.puremoneysystems.firstlight;
+package com.puremoneysystems.firstlight.ui;
+
+
+
+
 
 import org.jrebirth.core.ui.fxml.*;
 import org.slf4j.Logger;
@@ -12,24 +16,38 @@ import javafx.beans.property.*;
  * The class <strong>ApplicationStateModel</strong>.
  * 
  */
-public final class FirstLightApplicationState extends DefaultFXMLModel<FirstLightApplicationState> {
+public final class ApplicationShellState extends DefaultFXMLModel<ApplicationShellState> {
 
     /** The class logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(FirstLightApplicationState.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationShellState.class);
     
     
-    public FirstLightApplicationState(){
+    public ApplicationShellState(){
     }
-    
     
 
     /**
      * {@inheritDoc}
      */
     @Override
+    protected String getFXMLPath() {
+        return "/fxml/Application.fxml";
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void fxmlPreInitialize() {
+        LOGGER.debug("Application Shell FXML Pre-initializing");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void initModel() {
-    	String test = new String("In the bind method");
-    	test = (test != "") ? test : test; 	
+        LOGGER.debug("Init Model");
     }
 
     /**
@@ -38,7 +56,7 @@ public final class FirstLightApplicationState extends DefaultFXMLModel<FirstLigh
     @Override
     protected void initInnerModels() {
         // Put the code to initialize inner models here (if any)
-        LOGGER.debug("Init Sample Model");
+        LOGGER.debug("Init Inner Models");
     }
 
     /**
@@ -47,8 +65,7 @@ public final class FirstLightApplicationState extends DefaultFXMLModel<FirstLigh
     @Override
     protected void bind() {
         // Put the code to manage model object binding (if any)
-    	String test = new String("In the bind method");
-    	test = (test != "") ? test : test;
+        LOGGER.debug("Binding Model");
     }
     
     

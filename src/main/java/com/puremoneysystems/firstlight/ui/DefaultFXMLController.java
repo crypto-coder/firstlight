@@ -1,4 +1,4 @@
-package com.puremoneysystems.firstlight;
+package com.puremoneysystems.firstlight.ui;
 
 
 import javafx.scene.Node;

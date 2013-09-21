@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('../images/background-black_tile.png');&#10;-fx-background-repeat: repeat;&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.puremoneysystems.firstlight.FirstLightApplicationController">
+<AnchorPane id="root" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-image: url('../images/background-black_tile.png');&#10;-fx-background-repeat: repeat;&#10;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.puremoneysystems.firstlight.ui.ApplicationShellController">
   <!-- TODO Add Nodes -->
   <children>
     <AnchorPane id="navigationRegion" layoutX="0.0" layoutY="0.0" minHeight="-Infinity" prefHeight="-1.0" prefWidth="-1.0">

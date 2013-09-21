@@ -26,7 +26,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TimelineBuilder;
 
-import org.jrebirth.core.application.AbstractApplication;
+import org.jrebirth.core.application.DefaultApplication;
 import org.jrebirth.core.resource.font.FontItem;
 import org.jrebirth.core.ui.Model;
 import org.jrebirth.core.wave.Wave;
@@ -36,14 +36,14 @@ import org.slf4j.LoggerFactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
 import com.fxexperience.javafx.animation.*;
-
 import com.puremoneysystems.firstlight.resource.Fonts;
+import com.puremoneysystems.firstlight.ui.ApplicationShellState;
+import com.puremoneysystems.firstlight.ui.DefaultFXMLController;
 import com.puremoneysystems.firstlight.GuiceControllerFactory;
 
 
-public final class FirstLightApplication extends AbstractApplication<AnchorPane> {
+public final class FirstLightApplication extends DefaultApplication<AnchorPane> {
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(FirstLightApplication.class);
     private final Injector injector = Guice.createInjector(new GuiceDeclarationsModule());
@@ -56,6 +56,17 @@ public final class FirstLightApplication extends AbstractApplication<AnchorPane>
     private Pane activeScreenRegionNode = null;
         
     public static Stage PrimaryStage;
+    private static FirstLightApplication instance = null; 
+        
+    
+    
+    public static FirstLightApplication getInstance(){
+    	if(instance == null){
+    		instance = new FirstLightApplication();
+    	}
+    	
+    	return instance;
+    }
         
     
     
@@ -66,20 +77,6 @@ public final class FirstLightApplication extends AbstractApplication<AnchorPane>
     
 
 
-
-	@Override
-	protected void preInit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	protected void postInit() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
     /**
@@ -87,29 +84,21 @@ public final class FirstLightApplication extends AbstractApplication<AnchorPane>
      */
     @Override
     public Class<? extends Model> getFirstModelClass() {
-        return FirstLightApplicationState.class;
+        return ApplicationShellState.class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Wave> getPreBootWaveList() {
-        return Collections.emptyList();
-    }
+    
+    
+    
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Wave> getPostBootWaveList() {
-        return Collections.emptyList();
-    }
-    
-    
-    
-    
-    
+
+	@Override
+	protected void preInit() {
+		FirstLightApplication.instance = this;		
+	}
+
+
+  
     
     
     
@@ -122,62 +111,6 @@ public final class FirstLightApplication extends AbstractApplication<AnchorPane>
         PrimaryStage = stage;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void customizeScene(final Scene scene) {
-		try {
-			//Load the FXML for the Application and set it as the Root node			
-			this.applicationShell = this.loadFXML("/fxml/Application.fxml");
-			scene.setRoot(((Parent)this.applicationShell.getNode()));
-			
-			//Find the Navigation Region (id=navigationRegion) and create a fade in and down animation for it
-			this.navigationRegionNode = (Pane) this.applicationShell.getNode().lookup("#navigationRegion");
-			if(this.navigationRegionNode == null){
-		        LOGGER.trace("Could not locate a Node with id=navigationRegion in the /fxml/Application.fxml file.");				
-			}else{				
-				(new FadeInDownTransition(this.navigationRegionNode)).play();
-			}
-			
-			//Find the Notification Region (id=notificationRegion) and create a fade in and up animation for it
-			this.notificationRegionNode = (Pane) this.applicationShell.getNode().lookup("#notificationRegion");
-			if(this.notificationRegionNode == null){
-		        LOGGER.trace("Could not locate a Node with id=notificationRegion in the /fxml/Application.fxml file.");				
-			}else{				
-				(new FadeInUpTransition(this.notificationRegionNode)).play();
-			}
-			
-			//Find the Active Screen Region (id=activeScreenRegion) and create a fade in and fill animation for it
-			this.activeScreenRegionNode = (Pane) this.applicationShell.getNode().lookup("#activeScreenRegion");
-			if(this.activeScreenRegionNode == null){
-		        LOGGER.trace("Could not locate a Node with id=activeScreenRegion in the /fxml/Application.fxml file.");		
-		        throw new NullPointerException("Could not locate a Node with id=activeScreenRegion in the /fxml/Application.fxml file.");
-			}else{			
-				//Load the FXML for the Dashboard and set it as the first child node of the activeScreenRegion
-				//this.loadNewActiveScreen("/fxml/Dashboard.fxml");
-			}			
-			
-		} catch(Exception e) { 
-			LOGGER.error("Error while customizing the main scene for the application : ", e);
-			e.printStackTrace();
-		}
-    }
-
-    
-    
-    
-    /**
-     * TODO: REFACTOR and REMOVE this method
-     * {@inheritDoc}
-     */
-    @Override
-    public List<FontItem> getFontToPreload() {return null;}
-
-    
-    
-    
-    
     
     
     

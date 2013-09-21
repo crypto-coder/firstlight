@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.puremoneysystems.firstlight;
+package com.puremoneysystems.firstlight.ui.dashboard;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javax.inject.Inject;
 
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ import org.jrebirth.core.exception.CoreException;
 import org.jrebirth.core.ui.DefaultView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.puremoneysystems.firstlight.ui.DefaultFXMLController;
 
 /**
  * @author chris
