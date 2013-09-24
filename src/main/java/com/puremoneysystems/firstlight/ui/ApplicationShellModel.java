@@ -16,13 +16,13 @@ import javafx.beans.property.*;
  * The class <strong>ApplicationStateModel</strong>.
  * 
  */
-public final class ApplicationShellState extends DefaultFXMLModel<ApplicationShellState> {
+public final class ApplicationShellModel extends DefaultFXMLModel<ApplicationShellModel> {
 
     /** The class logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationShellState.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationShellModel.class);
     
     
-    public ApplicationShellState(){
+    public ApplicationShellModel(){
     }
     
 

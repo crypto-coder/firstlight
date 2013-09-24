@@ -38,7 +38,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.fxexperience.javafx.animation.*;
 import com.puremoneysystems.firstlight.resource.Fonts;
-import com.puremoneysystems.firstlight.ui.ApplicationShellState;
+import com.puremoneysystems.firstlight.ui.ApplicationShellModel;
 import com.puremoneysystems.firstlight.ui.DefaultFXMLController;
 import com.puremoneysystems.firstlight.GuiceControllerFactory;
 
@@ -77,7 +77,7 @@ public final class FirstLightApplication extends DefaultApplication<AnchorPane> 
      */
     @Override
     public Class<? extends Model> getFirstModelClass() {
-        return ApplicationShellState.class;
+        return ApplicationShellModel.class;
     }
 
     

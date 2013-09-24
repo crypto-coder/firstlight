@@ -32,11 +32,15 @@ import javafx.animation.TimelineBuilder;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 
 import org.jrebirth.component.ui.stack.StackWaves;
 import org.jrebirth.core.application.AbstractApplication;
 import org.jrebirth.core.command.basic.ChainWaveCommand;
 import org.jrebirth.core.command.basic.showmodel.ShowModelWaveBuilder;
+import org.jrebirth.core.command.basic.showmodel.DisplayModelWaveBean;
 import org.jrebirth.core.resource.font.FontItem;
 import org.jrebirth.core.ui.Model;
 import org.jrebirth.core.wave.Wave;
@@ -48,20 +52,25 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.fxexperience.javafx.animation.*;
 import com.puremoneysystems.firstlight.resource.Fonts;
-import com.puremoneysystems.firstlight.ui.ApplicationShellState;
-import com.puremoneysystems.firstlight.ui.dashboard.DashboardMetrics;
+import com.puremoneysystems.firstlight.ui.ApplicationShellModel;
+import com.puremoneysystems.firstlight.ui.dashboard.DashboardModel;
 import com.puremoneysystems.firstlight.ui.DefaultFXMLController;
 import com.puremoneysystems.firstlight.GuiceControllerFactory;
 import com.puremoneysystems.firstlight.FirstLightApplication;
 
 import org.jrebirth.core.concurrent.JRebirth;
+import org.jrebirth.core.concurrent.JRebirthThread;
+import org.jrebirth.core.concurrent.AbstractJrbRunnable;
 import org.jrebirth.core.exception.CoreException;
+import org.jrebirth.core.exception.JRebirthThreadException;
 import org.jrebirth.core.ui.fxml.AbstractFXMLController;
 import org.jrebirth.core.ui.fxml.FXMLComponent;
 import org.jrebirth.core.wave.JRebirthWaves;
 import org.jrebirth.core.wave.WaveBuilder;
 import org.jrebirth.core.wave.WaveData;
+import org.jrebirth.core.wave.WaveListener;
 import org.jrebirth.core.wave.WaveGroup;
+import org.jrebirth.core.wave.Wave.Status;
 import org.jrebirth.core.ui.DefaultView;
 import org.jrebirth.core.key.UniqueKey;
 import org.jrebirth.core.ui.Model;
@@ -74,7 +83,7 @@ import jfx.messagebox.*;
 
 
 
-public class ApplicationShellController extends AbstractFXMLController<ApplicationShellState, View<ApplicationShellState,?,?>> {
+public class ApplicationShellController extends AbstractFXMLController<ApplicationShellModel, View<ApplicationShellModel,?,?>> {
 												//DefaultFXMLController<ApplicationShellState> {
     /** The class logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationShellController.class);
@@ -90,7 +99,7 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
     private Pane notificationRegion;
     @FXML
     private Pane activeScreenRegion;
-    private SimpleObjectProperty<Node> activeScreenRegionProperty = new SimpleObjectProperty<Node>(this.activeScreenRegion);
+    private SimpleObjectProperty<Node> activeScreenRegionProperty = new SimpleObjectProperty<Node>(this.activeScreenRegion, "activeScreenRegion");
     public final SimpleObjectProperty<Node> ActiveScreenRegionProperty() { return activeScreenRegionProperty; }
     public final Node getActiveScreenRegion() { return activeScreenRegionProperty.get(); }
 
@@ -139,7 +148,7 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		try {
+		try {			
 			FirstLightApplication app = FirstLightApplication.getInstance();
 			
 			//Load the FXML for the Application and set it as the Root node			
@@ -170,7 +179,28 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 		        LOGGER.trace("Could not locate a Node with fx:id=activeScreenRegion in the /fxml/Application.fxml file.");		
 		        throw new NullPointerException("Could not locate a Node with id=activeScreenRegion in the /fxml/Application.fxml file.");
 			}else{			
-				//Load the FXML for the Home and set it as the first child node of the activeScreenRegion
+		        this.activeScreenRegionProperty  = new SimpleObjectProperty<Node>(this.activeScreenRegion, "activeScreenRegion");
+		        
+				//Load the FXML for the Dashboard and set it as the first child node of the activeScreenRegion
+//		        List<Node> activeScreenWrapper = new ArrayList<Node>();
+//		        activeScreenWrapper.add(this.activeScreenRegion);
+//		        final ObservableList<Node> dashboardUIViewBindPoint = FXCollections.observableList(activeScreenWrapper);
+//		        final Wave dashboardWave = this.getModel().attachUi(DashboardModel.class, WaveData.build(JRebirthWaves.ATTACH_UI_NODE_PLACEHOLDER, this.activeScreenRegionProperty));
+//				
+//		        dashboardWave.addWaveListener(new WaveListener(){
+//					@Override public void waveCreated(Wave wave) {}
+//					@Override public void waveSent(Wave wave) {}
+//					@Override public void waveProcessed(Wave wave) {
+//						FirstLightApplication.PrimaryStage.show();	}
+//					@Override public void waveCancelled(Wave wave) {}
+//					@Override public void waveConsumed(Wave wave) {}
+//					@Override public void waveFailed(Wave wave) {}
+//					@Override public void waveDestroyed(Wave wave) {
+//						FirstLightApplication.PrimaryStage.show();						
+//					}		        			        	
+//		        });
+		        
+		        
 //				this.getModel().sendWave(
 //						WaveBuilder.create()
 //								   .waveGroup(WaveGroup.CALL_COMMAND)
@@ -179,21 +209,85 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 //						);
 //				this.getModel().sendWave(StackWaves.SHOW_PAGE_ENUM, WaveData.build(StackWaves.PAGE_ENUM, FXMLPages.DashboardFXML));
 //				
-		        final List<Wave> chainedWaveList = new ArrayList<>();
-				Class<Model> dashboardModelClass = (Class<Model>) (DashboardMetrics.class).asSubclass(Model.class);
-				Wave loadDashboardWave = ShowModelWaveBuilder.create()
-															.uniquePlaceHolder(this.activeScreenRegionProperty)
-															.showModelKey(this.getModel().getLocalFacade().buildKey(dashboardModelClass))
-															.build();
-				chainedWaveList.add(loadDashboardWave);
 				
-				JRebirth.runIntoJIT(runnable);
-				this.getModel().getLocalFacade().getGlobalFacade().getNotifier().sendWave(
-								                    WaveBuilder.create()
-								                            .waveGroup(WaveGroup.CALL_COMMAND)
-								                            .relatedClass(ChainWaveCommand.class)
-								                            .data(WaveData.build(JRebirthWaves.CHAINED_WAVES, chainedWaveList))
-								                            .build());
+				Class<Model> dashboardModelClass = (Class<Model>) (DashboardModel.class).asSubclass(Model.class);
+				final UniqueKey<Model> dashboardModelKey = this.getModel().getLocalFacade().buildKey(dashboardModelClass);
+								
+		        //List<Node> activeScreenWrapper = new ArrayList<Node>();
+		        //activeScreenWrapper.add(this.activeScreenRegion);
+		        //final ObservableList<Node> dashboardUIViewBindPoint = FXCollections.observableList(activeScreenWrapper);
+		        
+//		        final List<Wave> chainedWaveList = new ArrayList<>();
+//				Wave loadDashboardWave = ShowModelWaveBuilder.create()
+//															.uniquePlaceHolder(this.activeScreenRegionProperty)
+//															.showModelKey(this.getModel().getLocalFacade().buildKey(dashboardModelClass))
+//															.build();
+//							
+//				
+//				chainedWaveList.add(loadDashboardWave);
+//				
+//				final Wave loadDashboardCommandWave = WaveBuilder.create()
+//									                        .waveGroup(WaveGroup.CALL_COMMAND)
+//									                        .relatedClass(ChainWaveCommand.class)
+//									                        .data(WaveData.build(JRebirthWaves.CHAINED_WAVES, chainedWaveList))
+//									                        .build();
+				
+		        
+		        
+		        
+		        
+		        
+		        final Wave loadDashboardWave = ShowModelWaveBuilder.create()
+																	.childrenPlaceHolder(this.activeScreenRegion.getChildren())
+																	.showModelKey(dashboardModelKey)
+																	.build();
+		        
+		        loadDashboardWave.addWaveListener(new WaveListener(){
+					@Override public void waveCreated(Wave wave) {}
+					@Override public void waveSent(Wave wave) {}
+					@Override public void waveProcessed(Wave wave) {}
+					@Override public void waveCancelled(Wave wave) {}
+					@Override public void waveConsumed(Wave wave) {
+						FirstLightApplication.PrimaryStage.show();
+					}	
+					@Override public void waveFailed(Wave wave) {
+						MessageBox.show(FirstLightApplication.PrimaryStage.getScene().getWindow(), "Wave Operation", "Failed", MessageBox.ICON_INFORMATION);}
+					@Override public void waveDestroyed(Wave wave) {
+						MessageBox.show(FirstLightApplication.PrimaryStage.getScene().getWindow(), "Wave Operation", "Destroyed", MessageBox.ICON_INFORMATION);					
+					}		        			        	
+		        });
+		        
+		        loadDashboardWave.setStatus(Status.Sent);
+
+		        // Use the JRebirth Thread to manage Waves
+		        JRebirth.runIntoJIT(new AbstractJrbRunnable("Send Wave " + loadDashboardWave.toString()) {
+		            @Override
+		            public void runInto() throws JRebirthThreadException {
+		            	getModel().getLocalFacade().getGlobalFacade().getNotifier().sendWave(loadDashboardWave);
+		            }
+		        });
+		        
+				
+		        
+		        
+		        
+		        
+//				JRebirth.runIntoJIT(new Runnable() {
+//		            @Override
+//		            public void run() {
+//		            	try {
+//		    				Wave loadDashboardWave = ShowModelWaveBuilder.create()
+//																		.childrenPlaceHolder(dashboardUIViewBindPoint)
+//																		.showModelKey(dashboardModelKey)
+//																		.build();
+//		    				
+//							JRebirthThread.getThread().getFacade().getNotifier().sendWave(loadDashboardWave);							
+//						} catch (JRebirthThreadException e) {   //(Exception e) {
+//							LOGGER.error("Error while sending the LoadDashboardCommand Wave : ", e);
+//							e.printStackTrace();
+//						}
+//		            }
+//		        });
 				
 				
 				

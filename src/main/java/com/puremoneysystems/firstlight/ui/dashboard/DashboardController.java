@@ -24,7 +24,7 @@ import com.puremoneysystems.firstlight.ui.DefaultFXMLController;
  * @param <M>
  *
  */
-public class DashboardController extends DefaultFXMLController<DashboardMetrics> {
+public class DashboardController extends DefaultFXMLController<DashboardModel> {
 
     /** The class logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.class);
@@ -57,37 +57,47 @@ public class DashboardController extends DefaultFXMLController<DashboardMetrics>
      * 
      * @throws CoreException if an error occurred while creating event handlers
      */
-    public DashboardController(final DefaultView<DashboardMetrics, AnchorPane, DefaultFXMLController<DashboardMetrics>> view) throws CoreException {
+    public DashboardController(final DefaultView<DashboardModel, AnchorPane, DefaultFXMLController<DashboardModel>> view) throws CoreException {
         super(view);        
     }
 
 
 
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {    	
+	}
+	
+	
     /**
      * {@inheritDoc}
      * @param <M>
      */
     @Override
-    public void setModel(final DashboardMetrics model){
+    public void setModel(final DashboardModel model){
     	super.setModel(model);  	
+    	
+    	if(this.otServerStatus != null){
+    		this.otServerStatus.setText(this.getModel().getOTServerConnectionState());
+    	}
+    	if(this.otServerStatus != null){
+    		this.httpsPeerCount.setText(String.valueOf(this.getModel().getHTTPSPeerCount()));
+    	}
+    	if(this.otServerStatus != null){
+    		this.i2pPeerCount.setText(String.valueOf(this.getModel().getI2PPeerCount()));
+    	}
+    	if(this.otServerStatus != null){
+    		this.torPeerCount.setText(String.valueOf(this.getModel().getTORPeerCount()));  
+    	}
     }
 
     
-    @FXML
     @Override
-    public DashboardMetrics getModel() {
+    public DashboardModel getModel() {
     	return super.getModel();
     }
 
     
     
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {    	
-    	this.otServerStatus.setText(this.getModel().getOTServerConnectionState());
-    	this.httpsPeerCount.setText(String.valueOf(this.getModel().getHTTPSPeerCount()));
-    	this.i2pPeerCount.setText(String.valueOf(this.getModel().getI2PPeerCount()));
-    	this.torPeerCount.setText(String.valueOf(this.getModel().getTORPeerCount()));  
-	}
 	
 	
 	

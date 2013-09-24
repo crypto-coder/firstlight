@@ -12,13 +12,13 @@ import com.fxexperience.javafx.scene.control.InputField;
 import javafx.beans.property.*;
 
 /**
- * The class <strong>DashboardMetrics</strong>.
+ * The class <strong>DashboardModel</strong>.
  * 
  */
-public final class DashboardMetrics extends DefaultFXMLModel<DashboardMetrics> {
+public final class DashboardModel extends DefaultFXMLModel<DashboardModel> {
 
     /** The class logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DashboardMetrics.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DashboardModel.class);
     
     
     /** Current OT Server connection state **/
@@ -47,11 +47,11 @@ public final class DashboardMetrics extends DefaultFXMLModel<DashboardMetrics> {
     
     
     
-    public DashboardMetrics(){
-    	this.otServerConnectionState.set("UNKNOWN");
-    	this.httpsPeerCount.set(0);
-    	this.i2pPeerCount.set(0);
-    	this.torPeerCount.set(0);   
+    public DashboardModel(){
+    	this.otServerConnectionState.set("DEFAULT");
+    	this.httpsPeerCount.set(-1);
+    	this.i2pPeerCount.set(-1);
+    	this.torPeerCount.set(-1);   
     }
     
 
