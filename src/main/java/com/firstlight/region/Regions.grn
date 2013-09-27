@@ -1,0 +1,46 @@
+<uml>
+   <greenVersion="30500"/>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{RegionAction.java[RegionAction"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="179"/>
+      <y="45"/>
+   </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{RegionWaveBean.java[RegionWaveBean"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="565"/>
+      <y="34"/>
+   </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{RegionWaveBuilder.java[RegionWaveBuilder"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="54"/>
+      <y="230"/>
+   </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.region.command{RegionCommand.java[RegionCommand"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="558"/>
+      <y="387"/>
+   </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.region.service{RegionService.java[RegionService"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="947"/>
+      <y="377"/>
+   </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{Region.java[Region"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="93"/>
+      <y="474"/>
+   </type>
+</uml>
+
