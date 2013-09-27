@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root type="AnchorPane" prefHeight="200.0" prefWidth="371.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.puremoneysystems.firstlight.ui.dashboard.DashboardController">
+<fx:root type="AnchorPane" prefHeight="200.0" prefWidth="371.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.firstlight.ui.dashboard.DashboardController">
   <children>
     <Label text="Number of I2P Peers" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="72.0" />
     <Label text="Number of TOR Peers" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="92.0" />
