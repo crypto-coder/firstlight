@@ -25,7 +25,7 @@ import com.firstlight.region.RegionWaveBean;
 import com.firstlight.region.command.RegionCommand;
 import com.firstlight.ui.ApplicationShellModel;
 import com.firstlight.ui.dashboard.DashboardModel;
-import com.firstlight.wallet.WalletModel;
+import com.firstlight.ui.wallet.KnownWalletModel;
 import com.fxexperience.javafx.animation.*;
 
 import org.jrebirth.core.ui.fxml.AbstractFXMLController;
@@ -167,9 +167,12 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
     
     @FXML
     public void openWalletFromFile() {   
+        //RegionWaveBean hideWaveBean = new RegionWaveBean(RegionAction.hide, "activeScreenRegion");
+        //this.getModel().callCommand(RegionCommand.class, hideWaveBean);      	
+    	
         //Build a RegionWave and call the RegionCommand
-        RegionWaveBean waveBean = new RegionWaveBean(RegionAction.show, WalletModel.class, "activeScreenRegion");
-        this.getModel().callCommand(RegionCommand.class, waveBean);      	
+        RegionWaveBean showWaveBean = new RegionWaveBean(RegionAction.show, KnownWalletModel.class, "activeScreenRegion");
+        this.getModel().callCommand(RegionCommand.class, showWaveBean);      	
     }
 	
     

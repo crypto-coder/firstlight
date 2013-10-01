@@ -174,6 +174,10 @@ public class RegionService extends DefaultService {
 	        					@Override
 	        					public void handle(ActionEvent arg0) {
 	        						regionMap.get(regionKey).getLoadingAnimation().setOnFinished(null);	
+	        						AnchorPane.setLeftAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
+	        						AnchorPane.setTopAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
+	        						AnchorPane.setRightAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
+	        						AnchorPane.setBottomAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
 	        					}
 	        				});
             				regionMap.get(regionKey).getLoadingAnimation().play();
@@ -242,6 +246,7 @@ public class RegionService extends DefaultService {
 						regionMap.get(regionKey).setLoaded(false);	
 						regionMap.get(regionKey).getFxmlPane().getChildren().clear();
 						regionMap.get(regionKey).getUnloadingAnimation().setOnFinished(null);
+						
 						if(callback != null){
 							callback.call(wave);
 						}

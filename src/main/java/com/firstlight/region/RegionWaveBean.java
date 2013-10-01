@@ -32,6 +32,12 @@ public class RegionWaveBean implements WaveBean {
     public RegionWaveBean(){
     	super();
     }
+
+    public RegionWaveBean(RegionAction action, String regionKey){
+    	this();
+    	this.setAction(action);
+    	this.setRegionKey(regionKey);
+    }
     
     public RegionWaveBean(RegionAction action, Class<? extends Model> modelClass, String regionKey){
     	this();

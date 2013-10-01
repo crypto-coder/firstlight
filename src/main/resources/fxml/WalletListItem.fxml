@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.StackPane?>
+
+<GridPane minHeight="100.0" minWidth="300.0" prefHeight="100.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2147483647">
+      <image>
+        <Image url="@../images/Wallet.png" />
+      </image>
+    </ImageView>
+    <Label fx:id="walletName" prefHeight="30.0" prefWidth="200.0" text="" translateX="0.0" translateY="0.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
+    <Label fx:id="hashCode" prefHeight="30.0" prefWidth="200.0" text="" translateX="0.0" translateY="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label id="lastModified" fx:id="location" prefHeight="30.0" prefWidth="200.0" text="" translateX="0.0" translateY="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+  </children>
+  <columnConstraints>
+    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+    <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="200.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+</GridPane>
