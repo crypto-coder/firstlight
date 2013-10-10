@@ -18,6 +18,7 @@ public class Region {
 
     /** The model class currently loaded in the fxmlPane */
     private Class<? extends Model> currentModelClass;
+    private Model currentModelInstance;
 	
 	private Animation loadingAnimation;
 	private Animation unloadingAnimation;
@@ -98,8 +99,18 @@ public class Region {
 	public void setCurrentModelClass(Class<? extends Model> currentModelClass) {
 		this.currentModelClass = currentModelClass;
 	}
-	
-	
+	/**
+	 * @return the currentModelInstance
+	 */
+	public Model getCurrentModelInstance() {
+		return this.currentModelInstance;
+	}
+	/**
+	 * @param currentModelInstance the currentModelInstance to set
+	 */
+	public void setCurrentModelInstance(Model currentModelInstance) {
+		this.currentModelInstance = currentModelInstance;
+	}
 	
 	
 }

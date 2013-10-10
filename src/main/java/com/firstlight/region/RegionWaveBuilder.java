@@ -22,6 +22,12 @@ public final class RegionWaveBuilder extends CommandWaveBuilder<RegionWaveBuilde
     /** The root model class to show attached to the stage. */
     private Class<? extends Model> modelClass;
 
+    /** The model instance to be loaded in the region. */
+    private Model modelInstance;
+
+    
+    
+    
     /**
      * Private constructor.
      */
@@ -53,6 +59,9 @@ public final class RegionWaveBuilder extends CommandWaveBuilder<RegionWaveBuilde
         }
         if (hasBit(2)) {
             getWaveBean(paramWave).setModelClass(this.modelClass);
+        }
+        if (hasBit(3)) {
+            getWaveBean(paramWave).setModelInstance(this.modelInstance);
         }
     }
 
@@ -95,6 +104,19 @@ public final class RegionWaveBuilder extends CommandWaveBuilder<RegionWaveBuilde
         return this;
     }
 
+    /**
+     * Define modelInstance for the region.
+     * 
+     * @param modelInstance the model instance
+     * 
+     * @return the builder
+     */
+    public RegionWaveBuilder modelInstance(final Model modelInstance) {
+        this.modelInstance = modelInstance;
+        addBit(3);
+        return this;
+    }
+
     
-    
+        
 }

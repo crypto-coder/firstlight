@@ -18,7 +18,7 @@ import org.jrebirth.core.ui.Model;
 import org.jrebirth.core.wave.Wave;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class ShowDashboardCommand extends DefaultCommand {

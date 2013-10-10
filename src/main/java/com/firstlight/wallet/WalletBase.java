@@ -6,22 +6,37 @@ package com.firstlight.wallet;
 import org.jrebirth.core.ui.fxml.DefaultFXMLModel;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
-public class WalletBase extends DefaultFXMLModel<WalletBase> implements IWallet {
+@SuppressWarnings("rawtypes")
+public class WalletBase<W extends WalletBase> extends DefaultFXMLModel<W> implements IWallet {
 
+    /** The wallet name. */
 	private String name = "";
-	private String hashCode = "";
-	private String location = "";
-	
-	/**
-	 * 
-	 */
-	public WalletBase() {
-		// TODO Auto-generated constructor stub
-	}
 
+    /** The wallet hash code. */
+	private String hashCode = "";
+
+	//TODO: Refactor this using IWalletStorageLocation
+    /** The wallet file location. */
+	private String location = "";
+
+    /** The wallet state. */
+	private WalletState walletState = WalletState.closed;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override public String getName() {
 		return this.name;
 	}
@@ -42,18 +57,11 @@ public class WalletBase extends DefaultFXMLModel<WalletBase> implements IWallet 
 	@Override public void setLocation(String newLocation) {
 		this.location = newLocation;
 	}
-	
-	
-	
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override protected String getFXMLPath() {
-        return "/fxml/WalletDetails.fxml";
-    }
-
-	
-		
-	
+   
+	@Override public WalletState getWalletState() {
+		// TODO Auto-generated method stub
+		return this.walletState;
+	}
+    
+    	
 }

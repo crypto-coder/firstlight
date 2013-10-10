@@ -1,7 +1,7 @@
 package com.firstlight.wallet;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public interface IWallet {
@@ -14,5 +14,9 @@ public interface IWallet {
 
 	String getLocation();
 	void setLocation(String newLocation);
-		
+
+	WalletState getWalletState();
+	
+	
+	
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="AnchorPane" minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.firstlight.ui.wallet.BasicWalletController">
+  <children>
+    <GridPane minHeight="300.0" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <children>
+        <Label text="Last Modified" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label fx:id="lastModified" text="lastModified" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <Label text="Hashcode" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <Label fx:id="hashCode" text="hashCode" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <Label fx:id="walletName" text="walletName" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+        <Label text="Wallet Name" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+        <StackPane prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.rowSpan="4" GridPane.valignment="TOP">
+          <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+              <image>
+                <Image url="@../images/Wallet.png" />
+              </image>
+              <StackPane.margin>
+                <Insets />
+              </StackPane.margin>
+            </ImageView>
+            <ImageView fx:id="lockImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" scaleX="0.75" scaleY="0.75">
+              <effect>
+                <ColorAdjust brightness="1.0" />
+              </effect>
+              <image>
+                <Image url="@../images/Lock.png" />
+              </image>
+            </ImageView>
+          </children>
+        </StackPane>
+        <Button fx:id="openWalletButton" mnemonicParsing="false" onAction="#openCurrentWallet" text="Open Wallet" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
+        <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+        <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="270.0" minWidth="270.0" prefWidth="270.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints fillHeight="false" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+        <RowConstraints fillHeight="false" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="120.0" minHeight="120.0" prefHeight="120.0" vgrow="ALWAYS" />
+      </rowConstraints>
+    </GridPane>
+  </children>
+</fx:root>

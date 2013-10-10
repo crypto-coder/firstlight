@@ -19,7 +19,7 @@ import javafx.fxml.FXML;
 
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class PanelMenuItem extends Control {

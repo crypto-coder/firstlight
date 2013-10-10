@@ -1,46 +1,53 @@
 <uml>
    <greenVersion="30500"/>
    <type>
-      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{RegionAction.java[RegionAction"/>
-      <height="-1"/>
-      <width="-1"/>
-      <x="179"/>
-      <y="45"/>
-   </type>
-   <type>
-      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{RegionWaveBean.java[RegionWaveBean"/>
-      <height="-1"/>
-      <width="-1"/>
-      <x="565"/>
-      <y="34"/>
-   </type>
-   <type>
-      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{RegionWaveBuilder.java[RegionWaveBuilder"/>
-      <height="-1"/>
-      <width="-1"/>
-      <x="54"/>
-      <y="230"/>
-   </type>
-   <type>
       <name="=firstlight/src\/main\/java<com.firstlight.region.command{RegionCommand.java[RegionCommand"/>
       <height="-1"/>
       <width="-1"/>
-      <x="558"/>
-      <y="387"/>
+      <x="-293"/>
+      <y="234"/>
    </type>
    <type>
       <name="=firstlight/src\/main\/java<com.firstlight.region.service{RegionService.java[RegionService"/>
       <height="-1"/>
       <width="-1"/>
-      <x="947"/>
-      <y="377"/>
+      <x="749"/>
+      <y="-95"/>
    </type>
    <type>
-      <name="=firstlight/src\/main\/java<com.firstlight.ui.region{Region.java[Region"/>
+      <name="=firstlight/src\/main\/java<com.firstlight.region{Region.java[Region"/>
       <height="-1"/>
       <width="-1"/>
-      <x="93"/>
-      <y="474"/>
+      <x="772"/>
+      <y="380"/>
    </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.region{RegionAction.java[RegionAction"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="-215"/>
+      <y="86"/>
+   </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.region{RegionWaveBean.java[RegionWaveBean"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="-103"/>
+      <y="397"/>
+   </type>
+   <type>
+      <name="=firstlight/src\/main\/java<com.firstlight.region{RegionWaveBuilder.java[RegionWaveBuilder"/>
+      <height="-1"/>
+      <width="-1"/>
+      <x="72"/>
+      <y="91"/>
+   </type>
+   <relationship>
+      <class="edu.buffalo.cse.green.relationship.dependency.DependencyIPart"/>
+      <sourceType="=firstlight/src\/main\/java<com.firstlight.region{RegionWaveBean.java[RegionWaveBean"/>
+      <targetType="=firstlight/src\/main\/java<com.firstlight.region{Region.java[Region"/>
+      <bendpoints>
+      </bendpoints>
+   </relationship>
 </uml>
 

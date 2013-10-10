@@ -21,6 +21,9 @@ public class RegionWaveBean implements WaveBean {
     /** The model class to load into a region */
     private Class<? extends Model> modelClass;
 
+    /** The model instance to load into a region */
+    private Model modelInstance;
+
     /** The FirstLight Region specifying the FXML Pane, loading, and unloading animations to use for operations */
     private Region region;
 
@@ -90,6 +93,26 @@ public class RegionWaveBean implements WaveBean {
      */
     public void setModelClass(final Class<? extends Model> modelClass) {
         this.modelClass = modelClass;
+    }
+
+    
+    
+    /**
+     * Gets the model instance to load into a region.
+     * 
+     * @return the model instance
+     */
+    public Model getModelInstance() {
+        return this.modelInstance;
+    }
+    
+    /**
+     * Sets the model instance to load into a region.
+     * 
+     * @param modelInstance the model instance
+     */
+    public void setModelInstance(final Model modelInstance) {
+        this.modelInstance = modelInstance;
     }
     
     

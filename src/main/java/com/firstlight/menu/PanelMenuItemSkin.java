@@ -7,7 +7,7 @@ import com.firstlight.menu.PanelMenuItem;
 import com.sun.javafx.scene.control.skin.SkinBase;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class PanelMenuItemSkin extends SkinBase<PanelMenuItem, PanelMenuItemBehavior> {

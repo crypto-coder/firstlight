@@ -35,6 +35,12 @@ public class RegionCommand extends DefaultUIBeanCommand<RegionWaveBean> {
             case hide:
             	rs.doHideRegion(wave);
                 break;
+            case register:
+            	rs.doRegisterRegion(wave);
+            	break;
+            case unregister:
+            	rs.doUnregisterRegion(wave);
+            	break;
             default:
                 LOGGER.error("Undefined RegionAction");
         }

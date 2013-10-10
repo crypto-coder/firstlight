@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<fx:root type="javafx.scene.control.TabPane" fx:id="localOpenTransactionsWalletTabPane" prefHeight="350.0" prefWidth="620.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.firstlight.ui.wallet.ot.LocalOpenTransactionsWalletController">
+  <tabs>
+    <Tab fx:id="generalTab" text="General">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <fx:include source="WalletDetails.fxml" fx:id="generalWalletDetails" />
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab fx:id="fileTab" text="File">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <GridPane prefHeight="286.0" prefWidth="592.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+              <children>
+                <Label text="Storage Location" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="fileStorageLocation" text="fileStorageLocation" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Label text="Size" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label fx:id="fileSize" text="fileSize" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Encryption" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label fx:id="fileEncyrption" text="fileEncyrption" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+              </children>
+              <columnConstraints>
+                <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints fillHeight="false" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="35.0" minHeight="35.0" prefHeight="35.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="68.0" vgrow="ALWAYS" />
+              </rowConstraints>
+            </GridPane>
+          </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab fx:id="accountsTab" text="Accounts">
+      <content>
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+  </tabs>
+</fx:root>

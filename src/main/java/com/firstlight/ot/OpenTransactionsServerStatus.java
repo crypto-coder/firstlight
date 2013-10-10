@@ -4,7 +4,7 @@
 package com.firstlight.ot;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public enum OpenTransactionsServerStatus {

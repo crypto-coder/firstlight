@@ -22,7 +22,6 @@ import org.jrebirth.core.wave.WaveTypeBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.firstlight.FirstLightApplication;
 import com.firstlight.region.Region;
 import com.firstlight.region.RegionWaveBean;
 
@@ -157,11 +156,14 @@ public class RegionService extends DefaultService {
             //If the Model class has been provided, then attach this UI
             if(rwb.getModelClass() != null){	            	        	
             	final UniqueKey<Model> modelKey = (UniqueKey<Model>) this.getLocalFacade().getGlobalFacade().getUiFacade().buildKey(rwb.getModelClass());                
-                final Wave showRegionWave = ShowModelWaveBuilder.create()
+                ShowModelWaveBuilder builder = ShowModelWaveBuilder.create()
             														.childrenPlaceHolder(this.regionMap.get(regionKey).getFxmlPane().getChildren())
-            														.showModelKey(modelKey)
-            														.build();
-                
+            														.showModelKey(modelKey);                
+                if(rwb.getModelInstance() != null){                	
+                	builder = builder.modelInstance(rwb.getModelInstance());                	
+                }                
+                final Wave showRegionWave = builder.build();
+                                
                 showRegionWave.addWaveListener(new WaveListener(){
             		@Override public void waveCreated(Wave showWave) {}
             		@Override public void waveSent(Wave showWave) {}
@@ -169,6 +171,7 @@ public class RegionService extends DefaultService {
             		@Override public void waveCancelled(Wave showWave) {}
             		@Override public void waveConsumed(Wave showWave) {
             			regionMap.get(regionKey).setCurrentModelClass(((RegionWaveBean)regionWave.getWaveBean()).getModelClass());
+            			regionMap.get(regionKey).setCurrentModelInstance(((RegionWaveBean)regionWave.getWaveBean()).getModelInstance());
             			if(regionMap.get(regionKey).getLoadingAnimation() != null){
             				regionMap.get(regionKey).getLoadingAnimation().setOnFinished(new EventHandler<ActionEvent>() {					
 	        					@Override

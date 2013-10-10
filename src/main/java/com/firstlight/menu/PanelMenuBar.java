@@ -14,7 +14,7 @@ import javafx.scene.layout.HBox;
 
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class PanelMenuBar extends HBox {

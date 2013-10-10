@@ -11,12 +11,12 @@ import java.lang.reflect.InvocationTargetException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.firstlight.ot.FreeNetOpenTransactionsWallet;
-import com.firstlight.ot.LocalOpenTransactionsWallet;
+import com.firstlight.ui.wallet.ot.FreeNetOpenTransactionsWallet;
+import com.firstlight.ui.wallet.ot.LocalOpenTransactionsWallet;
 
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class WalletBuilder<W extends WalletBase> {

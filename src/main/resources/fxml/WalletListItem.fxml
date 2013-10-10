@@ -9,7 +9,7 @@
 
 <GridPane minHeight="100.0" minWidth="300.0" prefHeight="100.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <children>
-    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="2147483647">
+    <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="3">
       <image>
         <Image url="@../images/Wallet.png" />
       </image>

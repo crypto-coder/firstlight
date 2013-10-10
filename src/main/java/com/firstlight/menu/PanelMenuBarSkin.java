@@ -4,7 +4,7 @@
 package com.firstlight.menu;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class PanelMenuBarSkin {

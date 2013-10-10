@@ -187,13 +187,16 @@ public class KnownWalletController extends DefaultFXMLController<KnownWalletMode
 
     
 	
-    private void showKnownWalletDetails(IWallet knownWallet){
+    @SuppressWarnings("rawtypes")
+	private void showKnownWalletDetails(IWallet knownWallet){
     	@SuppressWarnings("unchecked")
 		Class<? extends WalletBase> walletClass = (Class<? extends WalletBase>) knownWallet.getClass();
+    	WalletBase walletInstance = (WalletBase) knownWallet;
     	
         //Show the provided knownWallet detail in a screen region called "knownWalletDetailContainer"
     	//We need to use a wave for this action, so construct a RegionWaveBean and call the RegionCommand with the bean
         RegionWaveBean waveBean = new RegionWaveBean(RegionAction.show, walletClass, "knownWalletDetailContainer");
+        waveBean.setModelInstance(walletInstance);
         this.getModel().callCommand(RegionCommand.class, waveBean);      	
     }
     

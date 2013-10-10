@@ -4,7 +4,7 @@
 package com.firstlight.wallet;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public enum WalletType {

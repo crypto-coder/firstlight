@@ -8,7 +8,7 @@ package com.firstlight.service;
 import jfx.messagebox.*;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class DialogService implements IDialogService {

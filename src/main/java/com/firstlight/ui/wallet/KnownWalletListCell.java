@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 import com.firstlight.wallet.IWallet;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class KnownWalletListCell extends ListCell<IWallet> {

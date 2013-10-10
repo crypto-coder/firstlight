@@ -4,7 +4,7 @@
 package com.firstlight.currency;
 
 /**
- * @author chris
+ * @author MrMoneyChanger
  *
  */
 public class Currency implements ICurrency {
