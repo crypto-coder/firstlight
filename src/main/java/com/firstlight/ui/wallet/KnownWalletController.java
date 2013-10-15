@@ -25,13 +25,13 @@ import org.jrebirth.core.ui.DefaultView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.firstlight.region.Region;
-import com.firstlight.region.RegionAction;
-import com.firstlight.region.RegionWaveBean;
-import com.firstlight.region.command.RegionCommand;
+import com.firstlight.command.RegionCommand;
 import com.firstlight.ui.DefaultFXMLController;
+import com.firstlight.ui.Region;
 import com.firstlight.wallet.IWallet;
 import com.firstlight.wallet.WalletBase;
+import com.firstlight.wave.RegionAction;
+import com.firstlight.wave.RegionWaveBean;
 
 public class KnownWalletController extends DefaultFXMLController<KnownWalletModel>  {
 
@@ -74,10 +74,15 @@ public class KnownWalletController extends DefaultFXMLController<KnownWalletMode
 
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {  
+	public void initialize(URL arg0, ResourceBundle arg1) {		  
+		super.initialize(arg0, arg1);
+		
 		if(this.knownWalletListContainer != null){
+			this.getModel().loadAllKnownWallets();
+			
 			this.knownWalletList = new ListView<IWallet>();
 			this.knownWalletListContainer.getChildren().add(this.knownWalletList);
+			
 			AnchorPane.setBottomAnchor(this.knownWalletList, Double.valueOf(0));
 			AnchorPane.setLeftAnchor(this.knownWalletList, Double.valueOf(0));
 			AnchorPane.setRightAnchor(this.knownWalletList, Double.valueOf(0));

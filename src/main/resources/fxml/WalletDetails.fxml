@@ -37,7 +37,7 @@
             </ImageView>
           </children>
         </StackPane>
-        <Button fx:id="openWalletButton" mnemonicParsing="false" onAction="#openCurrentWallet" text="Open Wallet" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+        <Button fx:id="toggleWalletStateButton" mnemonicParsing="false" onAction="#toggleWalletState" text="Open Wallet" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
       </children>
       <columnConstraints>
         <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />

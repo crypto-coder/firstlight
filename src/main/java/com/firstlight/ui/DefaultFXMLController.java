@@ -2,6 +2,7 @@ package com.firstlight.ui;
 
 
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;

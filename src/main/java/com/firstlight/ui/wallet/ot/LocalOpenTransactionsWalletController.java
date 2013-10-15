@@ -31,14 +31,14 @@ import org.jrebirth.core.ui.DefaultView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.firstlight.region.Region;
-import com.firstlight.region.RegionAction;
-import com.firstlight.region.RegionWaveBean;
-import com.firstlight.region.command.RegionCommand;
+import com.firstlight.command.RegionCommand;
 import com.firstlight.ui.DefaultFXMLController;
+import com.firstlight.ui.Region;
 import com.firstlight.ui.wallet.BasicWalletController;
 import com.firstlight.wallet.IWallet;
 import com.firstlight.wallet.WalletBase;
+import com.firstlight.wave.RegionAction;
+import com.firstlight.wave.RegionWaveBean;
 
 public class LocalOpenTransactionsWalletController extends DefaultFXMLController<LocalOpenTransactionsWallet>  {
 
@@ -82,7 +82,6 @@ public class LocalOpenTransactionsWalletController extends DefaultFXMLController
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {  
 
-		//Add the openWalletButton handler
 		
 	}
 	

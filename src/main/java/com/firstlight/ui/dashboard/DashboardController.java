@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import org.jrebirth.core.exception.CoreException;
@@ -64,7 +65,8 @@ public class DashboardController extends DefaultFXMLController<DashboardModel> {
 
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {    	
+	public void initialize(URL arg0, ResourceBundle arg1) {    
+		super.initialize(arg0, arg1);
 	}
 	
 	

@@ -10,7 +10,7 @@ import org.jrebirth.core.ui.fxml.DefaultFXMLModel;
  *
  */
 @SuppressWarnings("rawtypes")
-public class WalletBase<W extends WalletBase> extends DefaultFXMLModel<W> implements IWallet {
+public abstract class WalletBase<W extends WalletBase> extends DefaultFXMLModel<W> implements IWallet {
 
     /** The wallet name. */
 	private String name = "";
@@ -59,9 +59,13 @@ public class WalletBase<W extends WalletBase> extends DefaultFXMLModel<W> implem
 	}
    
 	@Override public WalletState getWalletState() {
-		// TODO Auto-generated method stub
 		return this.walletState;
 	}
+
+	@Override public void setWalletState(WalletState state) {
+		this.walletState = state;
+	}
+	
     
     	
 }

@@ -24,8 +24,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/fxexperiencecontrols"/>
-	<classpathentry kind="lib" path="/home/chris/workspace/firstlight/lib/jfxmessagebox-1.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/chris/workspace/firstlight/src/main/resources/lib/jfxmessagebox-1.1.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.jrebirth.core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.jrebirth.component"/>
+	<classpathentry kind="lib" path="/home/chris/NetBeansProjects/otapij/otapij/target/otapij-0.14.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

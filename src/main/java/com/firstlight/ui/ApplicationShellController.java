@@ -19,13 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.firstlight.FirstLightApplication;
-import com.firstlight.region.Region;
-import com.firstlight.region.RegionAction;
-import com.firstlight.region.RegionWaveBean;
-import com.firstlight.region.command.RegionCommand;
+import com.firstlight.command.RegionCommand;
 import com.firstlight.ui.ApplicationShellModel;
 import com.firstlight.ui.dashboard.DashboardModel;
 import com.firstlight.ui.wallet.KnownWalletModel;
+import com.firstlight.wave.RegionAction;
+import com.firstlight.wave.RegionWaveBean;
 import com.fxexperience.javafx.animation.*;
 
 import org.jrebirth.core.ui.fxml.AbstractFXMLController;

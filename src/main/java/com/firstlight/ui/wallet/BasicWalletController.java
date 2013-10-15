@@ -28,18 +28,24 @@ import javafx.util.Duration;
 import jfx.messagebox.MessageBox;
 
 import org.jrebirth.core.exception.CoreException;
+import org.jrebirth.core.service.basic.TaskTrackerService;
 import org.jrebirth.core.ui.DefaultView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.firstlight.FirstLightApplication;
-import com.firstlight.region.Region;
-import com.firstlight.region.RegionAction;
-import com.firstlight.region.RegionWaveBean;
-import com.firstlight.region.command.RegionCommand;
+import com.firstlight.command.RegionCommand;
+import com.firstlight.command.WalletCommand;
+import com.firstlight.service.IWalletService;
 import com.firstlight.ui.DefaultFXMLController;
+import com.firstlight.ui.Region;
 import com.firstlight.wallet.IWallet;
 import com.firstlight.wallet.WalletBase;
+import com.firstlight.wallet.WalletState;
+import com.firstlight.wave.RegionAction;
+import com.firstlight.wave.RegionWaveBean;
+import com.firstlight.wave.WalletAction;
+import com.firstlight.wave.WalletWaveBean;
 
 @SuppressWarnings("rawtypes")
 public class BasicWalletController extends DefaultFXMLController<WalletBase>  {
@@ -51,7 +57,7 @@ public class BasicWalletController extends DefaultFXMLController<WalletBase>  {
     @FXML private Label lastModified;  
     @FXML private Label hashCode;  
     
-    @FXML private Button openWalletButton;
+    @FXML private Button toggleWalletStateButton;
     
     @FXML private WalletBase wallet;
 
@@ -80,8 +86,7 @@ public class BasicWalletController extends DefaultFXMLController<WalletBase>  {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {  
-
-		
+		super.initialize(arg0, arg1);	
 	}
 	
 	
@@ -116,9 +121,59 @@ public class BasicWalletController extends DefaultFXMLController<WalletBase>  {
 
         
 
-    @FXML
-    public void openCurrentWallet() {   
-    	MessageBox.show(FirstLightApplication.getInstance().getScene().getWindow(), "he clicked me", "Clicked It", MessageBox.ICON_INFORMATION);
+    @SuppressWarnings("unchecked")
+	@FXML
+    public void toggleWalletState() {   
+    	if(wallet.getWalletState() != WalletState.open){
+    		this.openWallet();
+    	}else{
+    		this.closeWallet();
+    	}
     }
+    
+    public void openWallet(){
+        LOGGER.info("Starting to open the current wallet");
+    	this.toggleWalletStateButton.setText("Working...");
+    	this.toggleWalletStateButton.setDisable(true);
+        
+        WalletState walletState = this.getModel().openWallet();
+        
+        if(walletState == WalletState.open){
+        	this.toggleWalletStateButton.setText("Close Wallet");
+        	this.toggleWalletStateButton.setDisable(false);
+            LOGGER.info("Wallet opened successfully");
+        }else{
+        	this.toggleWalletStateButton.setText("E R R O R");
+        	LOGGER.error("Failed to open the wallet");
+        }
+    }
+
+    public void closeWallet(){
+        LOGGER.info("Starting to close the current wallet");
+    	this.toggleWalletStateButton.setText("Working...");
+    	this.toggleWalletStateButton.setDisable(true);
+        
+        WalletState walletState = this.getModel().closeWallet();
+        
+        if(walletState == WalletState.closed){
+        	this.toggleWalletStateButton.setText("Open Wallet");
+        	this.toggleWalletStateButton.setDisable(false);
+            LOGGER.info("Wallet closed successfully");
+        }else{
+        	this.toggleWalletStateButton.setText("E R R O R");
+        	LOGGER.error("Failed to close the wallet");
+        }
+    }
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
 	
 }

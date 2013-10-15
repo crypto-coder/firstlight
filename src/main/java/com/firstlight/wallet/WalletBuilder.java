@@ -44,6 +44,7 @@ public class WalletBuilder<W extends WalletBase> {
      * Create a WalletBuilder instance.
      * 
      * @return new instance of WalletBuilder
+     * TODO: Refactor this so that the specific wallet identifies the WalletBuilder that should be used for its construction
      */
 	public static WalletBuilder<? extends WalletBase> create(WalletType walletType) {		
 		switch(walletType){
