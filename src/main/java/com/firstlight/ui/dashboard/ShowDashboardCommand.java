@@ -17,6 +17,11 @@ import org.jrebirth.core.key.UniqueKey;
 import org.jrebirth.core.ui.Model;
 import org.jrebirth.core.wave.Wave;
 
+import com.firstlight.command.RegionCommand;
+import com.firstlight.ui.wallet.KnownWalletModel;
+import com.firstlight.wave.RegionAction;
+import com.firstlight.wave.RegionWaveBean;
+
 /**
  * @author MrMoneyChanger
  *
@@ -25,23 +30,16 @@ public class ShowDashboardCommand extends DefaultCommand {
 
 	@Override
 	public void ready() throws CoreException {
-		// TODO Auto-generated method stub
 		super.ready();
 	}
 
 	@Override
 	protected void execute(Wave wave) throws CommandException {
-		// TODO Auto-generated method stub
 		super.execute(wave);
-		
 
-//		Class<Model> dashboardModelClass = (Class<Model>) (DashboardModel.class).asSubclass(Model.class);
-//		final UniqueKey<Model> dashboardModelKey = this.getModel().getLocalFacade().buildKey(dashboardModelClass);
-//						
-//        List<Node> activeScreenWrapper = new ArrayList<Node>();
-//        activeScreenWrapper.add(this.activeScreenRegion);
-//        final ObservableList<Node> dashboardUIViewBindPoint = FXCollections.observableList(activeScreenWrapper);
-		
+        //Build a RegionWave and call the RegionCommand
+        RegionWaveBean showWaveBean = new RegionWaveBean(RegionAction.show, KnownWalletModel.class, "activeScreenRegion");
+        this.callCommand(RegionCommand.class, showWaveBean);  		
 	}
 
 	@Override

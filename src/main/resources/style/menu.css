@@ -8,52 +8,35 @@
 	-fx-background-image: url('../images/background-iOS_light_grey_linen.png');
 	-fx-background-repeat: repeat;
 	-fx-background-size: cover;
-	-fx-skin: 'com.puremoneysystems.firstlight.menu.MenuItemSkin';
 }
 
-.flMenuItem .menuItemImage{
-	
-}
+.flMenuItem .menuItemImage{}
 
-.flMenuItem .menuItemLabel{
-	
-}
+.flMenuItem .menuItemLabel{}
 
 
 
 
 
-
+.panelMenuBar{}
+#menuItemContainer{
+	-fx-background-color: #FFd1d1;}
+#backMenuItemContainer{
+	-fx-background-color: #d1FFd1;}
 
 
 
 
 
 #mainMenuBar{}
-
-
-
-
 #walletMenu{}
 #openWalletMenuItem{}
-
-
-
-
 #currencyMenu{
 	-fx-background-color: #FF0000;}
 #showCurrencySummaryMenuItem{
 	-fx-background-color: #FF0000;}
-
-
-
-
 #connectionsMenu{}
 #showConnectionsSummaryMenuItem{}
-
-
-
-
 #currentContextMenu{}
 #backMenuItem{}
 

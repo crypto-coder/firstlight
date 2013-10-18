@@ -20,9 +20,11 @@ import org.slf4j.LoggerFactory;
 
 import com.firstlight.FirstLightApplication;
 import com.firstlight.command.RegionCommand;
+import com.firstlight.service.RegionService;
 import com.firstlight.ui.ApplicationShellModel;
 import com.firstlight.ui.dashboard.DashboardModel;
 import com.firstlight.ui.wallet.KnownWalletModel;
+import com.firstlight.ui.menu.MenuBarModel;
 import com.firstlight.wave.RegionAction;
 import com.firstlight.wave.RegionWaveBean;
 import com.fxexperience.javafx.animation.*;
@@ -43,6 +45,9 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
     private AnchorPane fxmlShell;    
     @FXML
     private Pane navigationRegion;
+    private SimpleObjectProperty<Node> navigationRegionProperty = new SimpleObjectProperty<Node>(this.navigationRegion, "navigationRegion");
+    public final SimpleObjectProperty<Node> NavigationRegionProperty() { return navigationRegionProperty; }
+    public final Node getNavigationRegion() { return navigationRegionProperty.get(); }
     @FXML
     private Pane notificationRegion;
     @FXML
@@ -71,7 +76,14 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 			if(this.navigationRegion == null){
 		        LOGGER.trace("Could not locate a Node with fx:id=navigationRegion in the /fxml/Application.fxml file.");				
 			}else{				
-				(new FadeInDownTransition(this.navigationRegion)).play();
+				//Update the property binding since FXML injection of the navigationRegion variable has occurred
+		        this.navigationRegionProperty  = new SimpleObjectProperty<Node>(this.navigationRegion, "navigationRegion");
+		        		        
+		        //Build a RegionWaveBean and use it to call the RegionCommand telling it to show the MenuBarModel in the navigationRegion
+		        RegionWaveBean waveBean = new RegionWaveBean(RegionAction.show, MenuBarModel.class, "navigationRegion");
+		        waveBean.setRegion(new Region(false, this.navigationRegion));
+		        this.getModel().callCommand(RegionCommand.class, waveBean);     
+				//(new FadeInDownTransition(this.navigationRegion)).play();
 			}
 			
 			//Find the Notification Region (id=notificationRegion) and create a fade in and up animation for it
@@ -89,9 +101,9 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 				//Update the property binding since FXML injection of the activeScreenRegion variable has occurred
 		        this.activeScreenRegionProperty  = new SimpleObjectProperty<Node>(this.activeScreenRegion, "activeScreenRegion");
 		        		        
-		        //Build a RegionWave and call the RegionCommand
+		        //Build a RegionWaveBean and use it to call the RegionCommand telling it to show the DashboardModel in the activeScreenRegion
 		        RegionWaveBean waveBean = new RegionWaveBean(RegionAction.show, DashboardModel.class, "activeScreenRegion");
-		        waveBean.setRegion(new Region(false, this.activeScreenRegion, this.createActiveScreenShowAnimation(), this.createActiveScreenHideAnimation()));
+		        waveBean.setRegion(new Region(false, this.activeScreenRegion, this.createDefaultShowAnimation(this.activeScreenRegion), this.createDefaultHideAnimation(this.activeScreenRegion)));
 		        this.getModel().callCommand(RegionCommand.class, waveBean);     
 			}			
 			
@@ -105,17 +117,23 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 	
 	
 
-	private Animation createActiveScreenShowAnimation() {
+	private Animation createDefaultShowAnimation(Node nodeToShow) {
     	try {
-    		FadeTransition fade = new FadeTransition(Duration.millis(1000), this.activeScreenRegion);
+    		//Make sure the node is in the proper disposition
+    		nodeToShow.setOpacity(0.0);
+    		nodeToShow.setScaleX(0.9);
+    		nodeToShow.setScaleY(0.9);
+    		
+    		//Create and set the animations
+    		FadeTransition fade = new FadeTransition(Duration.millis(500), nodeToShow);
     		fade.setFromValue(0.0);
     		fade.setToValue(1.0);
     		fade.setCycleCount(1);
     		
-    		ScaleTransition scale = new ScaleTransition(Duration.millis(1000), this.activeScreenRegion);
-    		scale.setFromX(0.1);
+    		ScaleTransition scale = new ScaleTransition(Duration.millis(500), nodeToShow);
+    		scale.setFromX(0.9);
     		scale.setToX(1.0);
-    		scale.setFromY(0.1);
+    		scale.setFromY(0.9);
     		scale.setToY(1.0);
     		scale.setCycleCount(1);
     		
@@ -130,18 +148,24 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 			return null;
 		}    	
 	}
-	private Animation createActiveScreenHideAnimation() {
+	private Animation createDefaultHideAnimation(Node nodeToHide) {
     	try {
-    		FadeTransition fade = new FadeTransition(Duration.millis(1000), this.activeScreenRegion);
+    		//Make sure the node is in the proper disposition
+    		nodeToHide.setOpacity(1.0);
+    		nodeToHide.setScaleX(1.0);
+    		nodeToHide.setScaleY(1.0);
+    		
+    		//Create and set the animations
+    		FadeTransition fade = new FadeTransition(Duration.millis(500), nodeToHide);
     		fade.setFromValue(1.0);
     		fade.setToValue(0.0);
     		fade.setCycleCount(1);
     		
-    		ScaleTransition scale = new ScaleTransition(Duration.millis(1000), this.activeScreenRegion);
+    		ScaleTransition scale = new ScaleTransition(Duration.millis(500), nodeToHide);
     		scale.setFromX(1.0);
-    		scale.setToX(0.1);
+    		scale.setToX(0.9);
     		scale.setFromY(1.0);
-    		scale.setToY(0.1);
+    		scale.setToY(0.9);
     		scale.setCycleCount(1);
     		
     		ParallelTransition parallel = new ParallelTransition();
@@ -165,7 +189,22 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 		
     
     @FXML
-    public void openWalletFromFile() {   
+    public void createNewOpenTransactionsWallet() {       	
+    	//Make sure the KnownWalletModel is loaded in the activeScreenRegion.  If not, then load it and set a callback to retry    	
+    	if(KnownWalletModel.class != getModel().getService(RegionService.class).getClassLoadedInRegion("activeScreenRegion")){
+    		this.showWalletSummary();
+    		
+    		
+    	}
+    	
+        //Build a RegionWave and call the RegionCommand
+        RegionWaveBean showWaveBean = new RegionWaveBean(RegionAction.show, KnownWalletModel.class, "activeScreenRegion");
+        this.getModel().callCommand(RegionCommand.class, showWaveBean);      	
+    }
+
+    
+    @FXML
+    public void showWalletSummary() {   
         //RegionWaveBean hideWaveBean = new RegionWaveBean(RegionAction.hide, "activeScreenRegion");
         //this.getModel().callCommand(RegionCommand.class, hideWaveBean);      	
     	
@@ -173,7 +212,11 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
         RegionWaveBean showWaveBean = new RegionWaveBean(RegionAction.show, KnownWalletModel.class, "activeScreenRegion");
         this.getModel().callCommand(RegionCommand.class, showWaveBean);      	
     }
-	
+    
+    
+    
+    
+    
     
     @FXML
     public void openCurrencySummary() {   

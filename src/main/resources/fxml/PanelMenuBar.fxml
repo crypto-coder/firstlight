@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?scenebuilder-classpath-element ../../../../target/classes?>
+<?import com.firstlight.ui.menu.PanelMenuItem?>
 <?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
-<?import com.puremoneysystems.firstlight.menu.PanelMenuItem ?>
-<?import com.puremoneysystems.firstlight.menu.PanelMenuItem?>
 
-
-<fx:root type="HBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<fx:root type="javafx.scene.layout.GridPane" id="" fx:id="panelMenuMainContainer" prefHeight="-1.0" prefWidth="-1.0" styleClass="panelMenuBar" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.firstlight.ui.menu.PanelMenuBar">
   <children>
-    <PanelMenuItem labelText="Test 1" image="../images/Bank.png" />
+    <HBox fx:id="menuItemContainer" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.valignment="TOP" GridPane.vgrow="NEVER" />
+    <Pane fx:id="backMenuItemContainer" prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="0" GridPane.vgrow="NEVER" />
   </children>
+  <columnConstraints>
+    <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="500.0" />
+    <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="100.0" minHeight="-Infinity" percentHeight="-1.0" prefHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+  </rowConstraints>
+  <stylesheets>
+    <URL value="@../style/menu.css" />
+  </stylesheets>
 </fx:root>

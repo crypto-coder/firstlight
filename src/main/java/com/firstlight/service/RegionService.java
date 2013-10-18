@@ -198,19 +198,22 @@ public class RegionService extends DefaultService {
                     }
                 });        	
             	
-            }else if(this.regionMap.get(regionKey) != null){
-            	try{
+            }
+        	            
+            //Anchor the region FXML Pane to its parent if possible
+            try{
+            	if(!regionMap.get(regionKey).getFxmlPane().getChildren().isEmpty() && regionMap.get(regionKey).getFxmlPane().getChildren().get(0).getParent() instanceof AnchorPane){
 					AnchorPane.setLeftAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
 					AnchorPane.setTopAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
 					AnchorPane.setRightAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
 					AnchorPane.setBottomAnchor(regionMap.get(regionKey).getFxmlPane().getChildren().get(0), Double.valueOf(0));
-            	}catch(Exception e){
-				 	LOGGER.error("Failed to anchor the new Region FXML pane to its parent.  Parent must be an AnchorPane.", e);				
             	}
-    			if(region.getLoadingAnimation() != null){
-    				this.regionMap.get(regionKey).getLoadingAnimation().play();
-    			}
-            }		
+        	}catch(Exception e){
+			 	LOGGER.error("Failed to anchor the new Region FXML pane to its parent.  Parent must be an AnchorPane.", e);				
+        	}
+			if(region.getLoadingAnimation() != null){
+				this.regionMap.get(regionKey).getLoadingAnimation().play();
+			}
         }
     }
 
@@ -266,6 +269,15 @@ public class RegionService extends DefaultService {
     
     
     
+    
+    
+    public Class<? extends Model> getClassLoadedInRegion(String regionKey){
+        if (this.regionMap.get(regionKey) != null) {
+        	return this.regionMap.get(regionKey).getCurrentModelClass();
+        }else{
+        	return null;
+        }
+    }
     
     
     

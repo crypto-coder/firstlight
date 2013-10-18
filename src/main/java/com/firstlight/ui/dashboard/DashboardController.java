@@ -18,6 +18,9 @@ import org.jrebirth.core.ui.DefaultView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.firstlight.service.IMenuItemRequestor;
+import com.firstlight.service.IMenuService;
+import com.firstlight.service.MenuService;
 import com.firstlight.ui.DefaultFXMLController;
 
 /**
@@ -30,6 +33,8 @@ public class DashboardController extends DefaultFXMLController<DashboardModel> {
     /** The class logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(DashboardController.class);
 
+    private String menuItemKey = "";
+    
     @FXML 
     private Label otServerStatus;
     @FXML 
@@ -66,8 +71,14 @@ public class DashboardController extends DefaultFXMLController<DashboardModel> {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {    
-		super.initialize(arg0, arg1);
+		super.initialize(arg0, arg1);		
 	}
+	
+	
+	
+	
+	
+	
 	
 	
     /**
@@ -99,9 +110,5 @@ public class DashboardController extends DefaultFXMLController<DashboardModel> {
     }
 
     
-    
-	
-	
-	
 
 }
