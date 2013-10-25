@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?scenebuilder-classpath-element ../../../../target/classes?>
+<?scenebuilder-classpath-element ../../../../../JRebirth/org.jrebirth/core/target/org.jrebirth.core-0.7.5-SNAPSHOT.jar?>
+<?scenebuilder-classpath-element ../../../../../../eclipse/plugins/org.slf4j.api_1.7.2.v20121108-1250.jar?>
+<?import com.firstlight.ui.menu.*?>
+<?import com.firstlight.ui.menu.CustomControlTest?>
 <?import com.firstlight.ui.menu.PanelMenuItem?>
 <?import java.lang.*?>
 <?import java.net.*?>

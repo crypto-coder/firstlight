@@ -15,7 +15,14 @@ public class MenuWaveBean implements WaveBean {
 
 		private String key = null;
 		private MenuItemModel menuItem = null;
+		private MenuAction action = null;
 
+		public MenuWaveBean(){}
+		public MenuWaveBean(String key, MenuAction action, MenuItemModel menuItem){
+			this.setKey(key);
+			this.setAction(action);
+			this.setMenuItem(menuItem);
+		}
 		
 		/**
 		 * @return the key
@@ -44,6 +51,20 @@ public class MenuWaveBean implements WaveBean {
 		 */
 		public void setMenuItem(MenuItemModel menuItem) {
 			this.menuItem = menuItem;
+		}
+
+		/**
+		 * @return the action
+		 */
+		public MenuAction getAction() {
+			return action;
+		}
+
+		/**
+		 * @param action the action to set
+		 */
+		public void setAction(MenuAction action) {
+			this.action = action;
 		}
 
 		

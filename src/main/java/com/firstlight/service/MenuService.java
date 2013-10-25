@@ -22,10 +22,16 @@ import org.jrebirth.core.wave.WaveBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.firstlight.command.RegionCommand;
 import com.firstlight.ui.menu.MenuItemModel;
+import com.firstlight.ui.wallet.KnownWalletModel;
 import com.firstlight.wallet.IWallet;
+import com.firstlight.wave.FirstLightWaves;
 import com.firstlight.wave.MenuWaveBean;
+import com.firstlight.wave.RegionAction;
+import com.firstlight.wave.RegionWaveBean;
 import com.firstlight.wave.WalletWaveBean;
+import com.firstlight.wave.MenuAction;
 
 /**
  * The class <strong>MenuService</strong>.
@@ -48,6 +54,9 @@ public class MenuService extends DefaultService implements IMenuService {
 
         registerCallback(DO_REGISTER_MENU_ITEM, RE_MENU_ITEM_REGISTEREDD);
         registerCallback(DO_UNREGISTER_MENU_ITEM, RE_MENU_ITEM_UNREGISTERED);
+        
+        listen(FirstLightWaves.DO_CHANGE_MENU_ITEMS);
+        listen(FirstLightWaves.DO_MENU_ITEMS_CHANGED);
     }
 	
         
@@ -65,20 +74,49 @@ public class MenuService extends DefaultService implements IMenuService {
     }
 
 
+    
+    public void doMenuItemsChanged(Wave wave){}
+    
+    
+    public void doChangeMenuItems(Wave wave){
+    	MenuWaveBean waveBean = getWaveBean(wave);
+    	
+    	switch(waveBean.getAction()){
+	    	case add:
+	    		this.doRegisterMenuItem(wave);
+	    		break;
+	    	case edit:
+	    		break;
+	    	case remove:
+	    		this.doUnregisterMenuItem(wave);
+	    		break;
+	    	default:
+	    		break;
+    	}    	
+    }
+    
 
 	@Override
 	public void doRegisterMenuItem(Wave wave) {
 		String key = getWaveBean(wave).getKey();
-		MenuItemModel menuItem = getWaveBean(wave).getMenuItem();
+		MenuItemModel menuItem = getWaveBean(wave).getMenuItem();	
 		
-		//TODO Fix this
-    	//menuItem = this.registerMenuItem(key, menuItem.getText(), menuItem.getImageURL());		
+		if(!this.menuItemModels.containsKey(key)){
+			this.menuItemModels.put(key, menuItem);
+		}		
+
+		//this.sendWave(FirstLightWaves.DO_MENU_ITEMS_CHANGED);	
 	}
 
 	@Override
 	public void doUnregisterMenuItem(Wave wave) {
 		String key = getWaveBean(wave).getKey();
-    	if(!this.unregisterMenuItem(key)){
+		
+		if(this.menuItemModels.containsKey(key)){
+			this.menuItemModels.remove(key);
+			
+	        //this.sendWave(FirstLightWaves.DO_MENU_ITEMS_CHANGED);  
+		}else{
     		LOGGER.error("Failed to unregister a menu item successfully. MenuItem key: " + key);
     	}
 	}
@@ -103,14 +141,18 @@ public class MenuService extends DefaultService implements IMenuService {
 		registeredMenuItem.setText(text);
 		registeredMenuItem.setImageURL(imageURL);
 		registeredMenuItem.setCommandLink(commandClass, commandWaveBean, callback);		
-				
-		return registeredMenuItem;
+
+		this.sendWave(FirstLightWaves.DO_MENU_ITEMS_CHANGED);
+        
+		return registeredMenuItem;	
 	}
 	
 	@Override
 	public Boolean unregisterMenuItem(String key) {
 		if(this.menuItemModels.containsKey(key)){
 			this.menuItemModels.remove(key);
+			
+	        this.sendWave(FirstLightWaves.DO_MENU_ITEMS_CHANGED);  
 		}
 
 		return true;

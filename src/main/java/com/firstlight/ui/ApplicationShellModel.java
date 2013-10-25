@@ -11,6 +11,9 @@ import com.firstlight.command.RegionCommand;
 import com.firstlight.service.IMenuService;
 import com.firstlight.service.MenuService;
 import com.firstlight.ui.dashboard.DashboardModel;
+import com.firstlight.ui.wallet.KnownWalletModel;
+import com.firstlight.wave.ChangeMenuWaveBuilder;
+import com.firstlight.wave.MenuAction;
 import com.firstlight.wave.RegionAction;
 import com.firstlight.wave.RegionWaveBean;
 import com.fxexperience.javafx.scene.control.InputField;
@@ -80,17 +83,27 @@ public final class ApplicationShellModel extends DefaultFXMLModel<ApplicationShe
 	@Override
     protected void showView() {
     	super.showView();
-    	
-    	this.menuService.registerMenuItem("HOME", "Home", "/images/Bank.png", (Class<? extends CommandBean<WaveBean>>)RegionCommand.class, 
-							    			new RegionWaveBean(RegionAction.show, DashboardModel.class, "activeScreenRegion"), HOME_CLICKED);
+
+    	ChangeMenuWaveBuilder.create()
+							.action(MenuAction.add)
+    						.menuItemKey("HOME")
+    						.text("Home")
+    						.imageURL("target/classes/images/Home.png")
+    						.commandClass((Class<? extends CommandBean<WaveBean>>)RegionCommand.class)
+    						.commandWaveBean(new RegionWaveBean(RegionAction.show, DashboardModel.class, "activeScreenRegion"))
+    						.callback(HOME_CLICKED)
+    						.buildAndSend(this);
     }
 
     
     @Override
     protected void hideView() {
     	super.hideView();
-    	
-    	this.menuService.unregisterMenuItem("HOME");
+
+    	ChangeMenuWaveBuilder.create()
+    						.action(MenuAction.remove)
+    						.menuItemKey("HOME")
+    						.buildAndSend(this);
     }
     
     

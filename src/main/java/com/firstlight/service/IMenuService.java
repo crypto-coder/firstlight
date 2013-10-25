@@ -34,7 +34,8 @@ public interface IMenuService {
     public static final WaveTypeBase DO_UNREGISTER_MENU_ITEM = WaveTypeBase.build("UNREGISTER_MENU_ITEM");
     public static final WaveTypeBase RE_MENU_ITEM_UNREGISTERED = WaveTypeBase.build("MENU_ITEM_UNREGISTERED");
 
-	
+    
+    
         
     void doRegisterMenuItem(final Wave wave);
     void doUnregisterMenuItem(final Wave wave);

@@ -16,6 +16,7 @@ import org.jrebirth.core.wave.WaveBean;
 
 public class MenuItemModel extends DefaultFXMLModel<MenuItemModel> {
 		
+	private MenuBarModel menuBar = null;
 	private String text = null;
 	private String imageURL = null;
 	private IMenuItemController controller = null;
@@ -25,6 +26,30 @@ public class MenuItemModel extends DefaultFXMLModel<MenuItemModel> {
 	private Class<? extends CommandBean<WaveBean>> commandClass = null;
 	private WaveBean commandWaveBean = null; 
 	private Callback<MouseEvent, Boolean> callback = null;
+	
+	
+	public MenuItemModel(){}
+
+	public MenuItemModel(MenuBarModel menuBar){
+		this.setMenuBar(menuBar);
+	}
+	
+	
+
+	/**
+	 * @return the menuBar
+	 */
+	public MenuBarModel getMenuBar() {
+		return menuBar;
+	}
+
+	/**
+	 * @param menuBar the menuBar to set
+	 */
+	public void setMenuBar(MenuBarModel menuBar) {
+		this.menuBar = menuBar;
+	}
+	
 	
 	
 	public String getText(){
@@ -58,13 +83,14 @@ public class MenuItemModel extends DefaultFXMLModel<MenuItemModel> {
 			
 			this.getController().getFXMLNode().addEventHandler(MouseEvent.MOUSE_CLICKED,  new AbstractNamedEventHandler<MouseEvent>("LinkCommand") {
 	            /**
-	             * Handle the triggered event.
-	             */
+	             * Have the MenuBarModel call the command.  PanelMenuItem's are not being loaded by a JRebirth DefaultFXMLController subclass, so MenuItemModel's do 
+	             * not have access to LocalFacade (and .getGlobalFacade)	             * 
+	             * 	             */
 	            @SuppressWarnings({ "unchecked", "rawtypes" })
 				@Override
 	            public void handle(final MouseEvent event) {
 	                if (callback == null || callback.call(event)) {
-	                    callCommand(commandClass, commandWaveBean);
+	                    menuBar.callCommand(commandClass, commandWaveBean);
 	                }
 	            }
 	        });
@@ -85,6 +111,28 @@ public class MenuItemModel extends DefaultFXMLModel<MenuItemModel> {
 	}
 	
 	
+
+	/**
+	 * @return the commandClass
+	 */
+	public Class<? extends CommandBean<WaveBean>> getCommandClass() {
+		return commandClass;
+	}
+
+	/**
+	 * @return the commandWaveBean
+	 */
+	public WaveBean getCommandWaveBean() {
+		return commandWaveBean;
+	}
+
+	/**
+	 * @return the callback
+	 */
+	public Callback<MouseEvent, Boolean> getCallback() {
+		return callback;
+	}
+	
 	
 	public void setCommandLink(Class<? extends CommandBean<WaveBean>> commandClass, WaveBean commandWaveBean){
 		this.setCommandLink(commandClass, commandWaveBean, null);
@@ -96,6 +144,7 @@ public class MenuItemModel extends DefaultFXMLModel<MenuItemModel> {
 		
 		this.commandReadyForControllerLink = true;
 	}
+
 	
 	
 }

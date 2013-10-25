@@ -3,9 +3,17 @@
 .flMenuItem{
 	-fx-border-width: 1px;
 	-fx-border-color:#000000;
-	-fx-border-radius: 20px;
+	-fx-border-radius: 10px;
 	-fx-background-radius: 20px;
 	-fx-background-image: url('../images/background-iOS_light_grey_linen.png');
+	-fx-background-repeat: repeat;
+	-fx-background-size: cover;
+}
+.flMenuItem:hover{
+	-fx-border-width: 1px;
+	-fx-border-color:#000000;
+	-fx-border-radius: 10px;
+	-fx-background-radius: 20px;
 	-fx-background-repeat: repeat;
 	-fx-background-size: cover;
 }

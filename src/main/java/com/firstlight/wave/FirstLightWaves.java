@@ -24,6 +24,10 @@ public interface FirstLightWaves {
     WaveItem<Model> MODEL_INSTANCE = new WaveItem<Model>(false) {};
     
     
+
+    WaveTypeBase DO_CHANGE_MENU_ITEMS = WaveTypeBase.build("CHANGE_MENU_ITEMS");
+    WaveTypeBase DO_MENU_ITEMS_CHANGED = WaveTypeBase.build("MENU_ITEMS_CHANGED");
+    
     
 	
 }

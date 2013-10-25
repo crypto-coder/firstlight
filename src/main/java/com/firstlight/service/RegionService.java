@@ -7,6 +7,8 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
+import org.jrebirth.core.command.basic.showmodel.DetachModelCommand;
+import org.jrebirth.core.command.basic.showmodel.DisplayModelWaveBean;
 import org.jrebirth.core.command.basic.showmodel.ShowModelWaveBuilder;
 import org.jrebirth.core.concurrent.AbstractJrbRunnable;
 import org.jrebirth.core.concurrent.JRebirth;
@@ -143,13 +145,13 @@ public class RegionService extends DefaultService {
         	
             //If the Region is loaded, and the requested Wave Model is not the current loaded Model, then hide the Region
             if(this.regionMap.get(regionKey).isLoaded() && rwb.getModelClass() != this.regionMap.get(regionKey).getCurrentModelClass()){
-            	this.doHideRegion(regionWave, new Callback<Wave, Wave>(){
+            	this.hideRegion(regionKey, this.regionMap.get(regionKey).getCurrentModelClass(), this.regionMap.get(regionKey).getCurrentModelInstance(), new Callback<Wave, Wave>(){
 					@Override
 					public Wave call(Wave originalShowWave) {
 						doShowRegion(originalShowWave);
 						return originalShowWave;
 					}            		
-            	});
+            	}, regionWave);
             	return;
             }
         	
@@ -162,9 +164,9 @@ public class RegionService extends DefaultService {
                 if(rwb.getModelInstance() != null){                	
                 	builder = builder.modelInstance(rwb.getModelInstance());                	
                 }                
-                final Wave showRegionWave = builder.build();
+                final Wave showModelWave = builder.build();
                                 
-                showRegionWave.addWaveListener(new WaveListener(){
+                showModelWave.addWaveListener(new WaveListener(){
             		@Override public void waveCreated(Wave showWave) {}
             		@Override public void waveSent(Wave showWave) {}
             		@Override public void waveProcessed(Wave showWave) {}
@@ -188,13 +190,13 @@ public class RegionService extends DefaultService {
             		@Override public void waveDestroyed(Wave showWave) {}		        			        	
                 });
                 
-                showRegionWave.setStatus(Status.Sent);
+                showModelWave.setStatus(Status.Sent);
             
                 // Use the JRebirth Thread to manage Waves
-                JRebirth.runIntoJIT(new AbstractJrbRunnable("Send Wave " + showRegionWave.toString()) {
+                JRebirth.runIntoJIT(new AbstractJrbRunnable("Send Wave " + showModelWave.toString()) {
                     @Override
                     public void runInto() throws JRebirthThreadException {
-                    	getLocalFacade().getGlobalFacade().getNotifier().sendWave(showRegionWave);
+                    	getLocalFacade().getGlobalFacade().getNotifier().sendWave(showModelWave);
                     }
                 });        	
             	
@@ -211,10 +213,34 @@ public class RegionService extends DefaultService {
         	}catch(Exception e){
 			 	LOGGER.error("Failed to anchor the new Region FXML pane to its parent.  Parent must be an AnchorPane.", e);				
         	}
-			if(region.getLoadingAnimation() != null){
-				this.regionMap.get(regionKey).getLoadingAnimation().play();
-			}
         }
+    }
+
+    
+    
+    
+
+    /**
+     * Hide a region with the provided regionKey.
+     * 
+     * @param wave the source wave
+     */
+    @SuppressWarnings("unchecked")
+	private void hideRegion(final String regionKey, final Class<? extends Model> modelClass, final Model modelInstance) { 
+		if(regionMap.get(regionKey).getUnloadingAnimation() != null && regionMap.get(regionKey).getUnloadingAnimation().getOnFinished() == null){
+			regionMap.get(regionKey).getUnloadingAnimation().setOnFinished(new EventHandler<ActionEvent>() {					
+				@Override
+				public void handle(ActionEvent arg0) {
+					regionMap.get(regionKey).getUnloadingAnimation().setOnFinished(null);
+	    			regionMap.get(regionKey).setLoaded(false);     	    			
+
+	    			detachModelFromRegion(regionKey, modelClass, modelInstance);
+				}
+			});
+			regionMap.get(regionKey).getUnloadingAnimation().play();
+		}else{	
+			detachModelFromRegion(regionKey, modelClass, modelInstance);		
+		}		
     }
 
     /**
@@ -222,7 +248,70 @@ public class RegionService extends DefaultService {
      * 
      * @param wave the source wave
      */
-    public void doHideRegion(final Wave wave) {
+    @SuppressWarnings("unchecked")
+	private void hideRegion(final String regionKey, final Class<? extends Model> modelClass, final Model modelInstance, final Callback<Wave, Wave> callback, final Wave originalWave) {    
+		if(this.regionMap.get(regionKey).isLoaded() && this.regionMap.get(regionKey).getUnloadingAnimation() != null){
+			this.regionMap.get(regionKey).getUnloadingAnimation().setOnFinished(new EventHandler<ActionEvent>() {					
+				@Override
+				public void handle(ActionEvent arg0) {
+					regionMap.get(regionKey).getUnloadingAnimation().setOnFinished(null);
+	    			regionMap.get(regionKey).setLoaded(false);            		
+
+	    			detachModelFromRegion(regionKey, modelClass, modelInstance);	
+	    			
+					if(callback != null){
+						callback.call(originalWave);
+					}
+				}
+			});
+			regionMap.get(regionKey).getUnloadingAnimation().play();
+		}else{
+			detachModelFromRegion(regionKey, modelClass, modelInstance);
+		}		
+    }
+    
+    /**
+     * Detach the Model from the Region
+     */
+    @SuppressWarnings("unchecked")
+	private void detachModelFromRegion(final String regionKey, final Class<? extends Model> modelClass, final Model modelInstance){
+		//Create a DetachModelCommand and use hideModel to tell it which model to remove	
+    	final UniqueKey<Model> modelKey = (UniqueKey<Model>) this.getLocalFacade().getGlobalFacade().getUiFacade().buildKey(modelClass); 
+        DisplayModelWaveBean waveBean = new DisplayModelWaveBean();
+        
+        if(modelInstance != null){
+        	waveBean.setHideModel(modelInstance);
+        }
+        waveBean.setHideModelKey(modelKey);
+        waveBean.setChidrenPlaceHolder(this.regionMap.get(regionKey).getFxmlPane().getChildren());
+                  	            	                                
+        WaveListener detachModelWaveListener = new WaveListener(){
+    		@Override public void waveCreated(Wave showWave) {}
+    		@Override public void waveSent(Wave showWave) {}
+    		@Override public void waveProcessed(Wave showWave) {}
+    		@Override public void waveCancelled(Wave showWave) {}
+    		@Override public void waveConsumed(Wave showWave) {    			
+    			regionMap.get(regionKey).setCurrentModelClass(null);
+    			regionMap.get(regionKey).setCurrentModelInstance(null);		
+    		}
+    		@Override public void waveFailed(Wave showWave) {}
+    		@Override public void waveDestroyed(Wave showWave) {}		        			        	
+        };
+
+        Wave detachModelWave = this.callCommand(DetachModelCommand.class, waveBean, detachModelWaveListener);   
+    }
+    
+    
+    
+    
+    /**
+
+     * Hide a region with the provided regionKey.
+     * 
+     * @param wave the source wave
+     */
+    @SuppressWarnings("unchecked")
+	public void doHideRegion(final Wave wave) {
         LOGGER.trace("Hiding a region.");
 
         final RegionWaveBean rwb = getWaveBean(wave);
@@ -233,7 +322,10 @@ public class RegionService extends DefaultService {
 			if(this.regionMap.get(regionKey).isLoaded() && this.regionMap.get(regionKey).getUnloadingAnimation() != null){
 				this.regionMap.get(regionKey).getUnloadingAnimation().play();
 			}			
-			this.regionMap.get(regionKey).setLoaded(false);
+			
+            if(rwb.getModelClass() != null){
+            	this.hideRegion(regionKey, rwb.getModelClass(), rwb.getModelInstance());                         	
+            }			
         }   
     }
     /**
@@ -253,8 +345,6 @@ public class RegionService extends DefaultService {
 				this.regionMap.get(regionKey).getUnloadingAnimation().setOnFinished(new EventHandler<ActionEvent>() {					
 					@Override
 					public void handle(ActionEvent arg0) {
-						regionMap.get(regionKey).setLoaded(false);	
-						regionMap.get(regionKey).getFxmlPane().getChildren().clear();
 						regionMap.get(regionKey).getUnloadingAnimation().setOnFinished(null);
 						
 						if(callback != null){
@@ -262,8 +352,9 @@ public class RegionService extends DefaultService {
 						}
 					}
 				});
-				this.regionMap.get(regionKey).getUnloadingAnimation().play();
-			}			
+			}	
+			
+			this.doHideRegion(wave);	
         }   
     }
     
