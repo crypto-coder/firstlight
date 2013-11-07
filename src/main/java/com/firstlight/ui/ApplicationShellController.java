@@ -71,7 +71,7 @@ public class ApplicationShellController extends AbstractFXMLController<Applicati
 			AnchorPane.setLeftAnchor(this.fxmlShell, Double.valueOf(0));
 			AnchorPane.setTopAnchor(this.fxmlShell, Double.valueOf(0));
 			AnchorPane.setRightAnchor(this.fxmlShell, Double.valueOf(0));
-			
+					
 			//Find the Navigation Region (id=navigationRegion) and create a fade in and down animation for it
 			if(this.navigationRegion == null){
 		        LOGGER.trace("Could not locate a Node with fx:id=navigationRegion in the /fxml/Application.fxml file.");				
