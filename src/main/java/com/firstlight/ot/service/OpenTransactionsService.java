@@ -6,6 +6,8 @@ package com.firstlight.ot.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jrebirth.core.exception.CoreException;
 import org.jrebirth.core.service.DefaultService;
@@ -21,11 +23,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.firstlight.service.IWalletService;
+import com.firstlight.ui.wallet.ot.OpenTransactionsAccount;
 import com.firstlight.wallet.IWallet;
 import com.firstlight.wallet.WalletState;
 import com.firstlight.wave.WalletWaveBean;
 
 import eu.ApplicationProperties;
+import eu.opentxs.bridge.Util;
 import eu.opentxs.bridge.core.commands.Commands;
 import eu.opentxs.bridge.core.commands.act.AccountCommands;
 import eu.opentxs.bridge.core.commands.act.AssetCommands;
@@ -37,9 +41,13 @@ import eu.opentxs.bridge.core.commands.act.MetaCommands;
 import eu.opentxs.bridge.core.commands.act.NymCommands;
 import eu.opentxs.bridge.core.commands.act.ServerCommands;
 import eu.opentxs.bridge.core.commands.act.WalletCommands;
+import eu.opentxs.bridge.core.dto.Account;
+import eu.opentxs.bridge.core.dto.Transaction;
 import eu.opentxs.bridge.core.exceptions.OTException;
 import eu.opentxs.bridge.core.modules.Module;
 import eu.opentxs.bridge.core.modules.OTAPI;
+import eu.opentxs.bridge.core.modules.act.AccountModule;
+import eu.opentxs.bridge.core.modules.act.AssetModule;
 
 /**
  * The class <strong>OpenTransactionsService</strong>.
@@ -129,6 +137,78 @@ public class OpenTransactionsService extends DefaultService implements IWalletSe
 						
 						wallet.setWalletState(WalletState.open);						
 						LOGGER.trace("Wallet successfully opened.");
+						
+						//Retrieve the Accounts for the Wallet, repackage them, and attach them to the IWallet
+						List<Account> accounts = Account.getList();
+						List<OpenTransactionsAccount> otAccounts = new ArrayList<OpenTransactionsAccount>();
+						for(Account account : accounts){
+														
+							AccountModule accountModule = AccountModule.getInstance(account.id);
+							String assetID = AccountModule.getAccountAssetId(account.id);
+							String assetName = AssetModule.getAssetName(assetID);
+							String nymID = AccountModule.getAccountNymId(account.id);
+							String nymName = AccountModule.getNymName(nymID);
+							
+							//Retrieve the Account Balance value
+							Integer accountBalance = AccountModule.convertAmountToValue(OTAPI.GetAccount.balance(account.id));
+							String accountBalanceFormatted = AccountModule.convertValueToFormat(assetID, accountBalance);							
+							
+							//Retrieve the Purse value
+							String purse = OTAPI.loadPurse(account.serverId, nymID, assetID);
+							Integer purseBalance = new Integer(0);
+							String purseBalanceFormatted = "";
+							if (Util.isValidString(purse)){
+								purseBalance = AccountModule.convertAmountToValue(OTAPI.Purse.getBalance(account.serverId, assetID, purse));
+								purseBalanceFormatted = AccountModule.convertValueToFormat(assetID, purseBalance);
+							}
+
+							//Retrieve the Pending Transactions value in the outbox							
+							String outboxLedger = OTAPI.loadOutbox(account.serverId, nymID, account.id);
+							Integer outboxLedgerValue = new Integer(0);
+							String outboxLedgerValueFormatted = "";
+							if (Util.isValidString(outboxLedger)){
+								Integer transactionCount = OTAPI.Ledger.getCount(account.serverId,  nymID,  account.id, outboxLedger);
+								
+								for(int i = 0; i < transactionCount; i++){
+									String currentTransaction = OTAPI.Ledger.getTransactionByIndex(account.serverId, nymID, account.id, outboxLedger, i);
+									String currentTransactionAmount = OTAPI.Transaction.getAmount(account.serverId, nymID, account.id, currentTransaction);
+									
+									outboxLedgerValue += Module.convertAmountToValue(currentTransactionAmount);
+								}
+								
+								outboxLedgerValueFormatted = Module.convertValueToFormat(assetID, outboxLedgerValue);
+							}
+							
+							//Retrieve the Pending Transactions value in the inbox						
+							String inboxLedger = OTAPI.loadInbox(account.serverId, nymID, account.id);
+							Integer inboxLedgerValue = new Integer(0);
+							String inboxLedgerValueFormatted = "";
+							if (Util.isValidString(inboxLedger)){
+								Integer transactionCount = OTAPI.Ledger.getCount(account.serverId,  nymID,  account.id, inboxLedger);
+								
+								for(int i = 0; i < transactionCount; i++){
+									String currentTransaction = OTAPI.Ledger.getTransactionByIndex(account.serverId, nymID, account.id, inboxLedger, i);
+									String currentTransactionAmount = OTAPI.Transaction.getAmount(account.serverId, nymID, account.id, currentTransaction);
+									
+									inboxLedgerValue += Module.convertAmountToValue(currentTransactionAmount);
+								}
+								
+								inboxLedgerValueFormatted = Module.convertValueToFormat(assetID, inboxLedgerValue);
+							}
+							
+							//Retrieve the Pending Checks drawn, but undeposited, against this account
+							List<Transaction> pendingTransactions = accountModule.getTransactionsUnrealized();
+							Integer pendingTransactionsValue = new Integer(0);
+							String pendingTransactionsValueFormatted = "";					
+							for(Transaction currentTransaction : pendingTransactions){
+								
+							}							
+							pendingTransactionsValueFormatted = Module.convertValueToFormat(assetID, pendingTransactionsValue);
+							
+							//Create the new OpenTransactionsAccount and attach it to the accounts list
+							OpenTransactionsAccount otAccount = new OpenTransactionsAccount(account.name, assetName, nymName, purseBalanceFormatted, accountBalanceFormatted, outboxLedgerValueFormatted, inboxLedgerValueFormatted, pendingTransactionsValueFormatted);
+							wallet.getAssetAccounts().add(otAccount);
+						}
 					}
 				}
 

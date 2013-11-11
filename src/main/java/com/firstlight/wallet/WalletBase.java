@@ -3,6 +3,13 @@
  */
 package com.firstlight.wallet;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import org.jrebirth.core.ui.fxml.DefaultFXMLModel;
 
 /**
@@ -24,8 +31,10 @@ public abstract class WalletBase<W extends WalletBase> extends DefaultFXMLModel<
 
     /** The wallet state. */
 	private WalletState walletState = WalletState.closed;
+	private BooleanProperty walletStateChanged = new SimpleBooleanProperty(false);
 	
-	
+	/** The wallet asset accounts */
+	private List<IAssetAccount> assetAccounts = new ArrayList<IAssetAccount>();
 	
 	
 	
@@ -66,6 +75,26 @@ public abstract class WalletBase<W extends WalletBase> extends DefaultFXMLModel<
 		this.walletState = state;
 	}
 	
-    
+
+	@Override public List<IAssetAccount> getAssetAccounts(){
+		return this.assetAccounts;
+	}
+	@Override public void setAssetAccounts(List<IAssetAccount> assetAccounts){
+		this.assetAccounts = assetAccounts;
+	}
     	
+	
+	public Boolean getWalletStateChanged(){
+		return this.walletStateChanged.get();
+	}
+	public ReadOnlyBooleanProperty walletStateChangedProperty(){
+		return this.walletStateChanged;
+	}
+	public void indicateWalletStateChangeStarted(){
+		this.walletStateChanged.set(true);
+	}
+	public void indicateWalletStateChangeCompleted(){
+		this.walletStateChanged.set(false);
+	}
+	
 }

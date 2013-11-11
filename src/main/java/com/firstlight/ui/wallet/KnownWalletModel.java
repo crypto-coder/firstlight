@@ -2,19 +2,29 @@ package com.firstlight.ui.wallet;
 
 import java.util.HashMap;
 
+import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import static org.jrebirth.core.resource.Resources.create;
 
+import org.jrebirth.core.command.CommandBean;
 import org.jrebirth.core.resource.ResourceBuilders;
 import org.jrebirth.core.ui.fxml.DefaultFXMLModel;
+import org.jrebirth.core.wave.WaveBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.firstlight.FirstLightParameters;
+import com.firstlight.command.RegionCommand;
+import com.firstlight.ui.dashboard.DashboardModel;
 import com.firstlight.ui.wallet.ot.LocalOpenTransactionsWallet;
 import com.firstlight.wallet.IWallet;
 import com.firstlight.wallet.WalletBase;
 import com.firstlight.wallet.WalletType;
 import com.firstlight.wallet.WalletBuilder;
+import com.firstlight.wave.ChangeMenuWaveBuilder;
+import com.firstlight.wave.MenuAction;
+import com.firstlight.wave.RegionAction;
+import com.firstlight.wave.RegionWaveBean;
 
 /**
  * The class <strong>KnownWalletModel</strong>.
@@ -179,6 +189,51 @@ public class KnownWalletModel extends DefaultFXMLModel<KnownWalletModel> {
     
     
 	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void showView() {
+		super.showView();
+
+    	ChangeMenuWaveBuilder.create()
+							.action(MenuAction.add)
+    						.menuItemKey("ADD")
+    						.text("New")
+    						.imageURL("target/classes/images/Expand.png")
+    						.commandClass((Class<? extends CommandBean<WaveBean>>)RegionCommand.class)
+    						.commandWaveBean(new RegionWaveBean(RegionAction.show, DashboardModel.class, "activeScreenRegion"))
+    						.callback(ADD_CLICKED)
+    						.buildAndSend(this);
+	}
+	
+	
+	@Override
+	protected void hideView() {
+		super.hideView();
+		
+    	ChangeMenuWaveBuilder.create()
+							.action(MenuAction.remove)
+    						.menuItemKey("ADD")
+    						.buildAndSend(this);
+	}
+	
+	
+	
+
+    
+    public static final Callback<MouseEvent, Boolean> ADD_CLICKED = new Callback<MouseEvent, Boolean>() {
+        /**
+         * Add Wallet link was clicked
+         * 
+         * @param event the mouse event triggered
+         * 
+         * @return true for single click
+         */
+        @Override
+        public Boolean call(final MouseEvent event) {
+        	return true;
+        }
+    };
 	
 	
 }

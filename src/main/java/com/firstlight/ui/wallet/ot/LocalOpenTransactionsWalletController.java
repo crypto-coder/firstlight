@@ -21,6 +21,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -35,6 +38,7 @@ import com.firstlight.command.RegionCommand;
 import com.firstlight.ui.DefaultFXMLController;
 import com.firstlight.ui.Region;
 import com.firstlight.ui.wallet.BasicWalletController;
+import com.firstlight.wallet.IAssetAccount;
 import com.firstlight.wallet.IWallet;
 import com.firstlight.wallet.WalletBase;
 import com.firstlight.wave.RegionAction;
@@ -52,6 +56,15 @@ public class LocalOpenTransactionsWalletController extends DefaultFXMLController
     @FXML private Label fileStorageLocation;  
     @FXML private Label fileSize;  
     @FXML private Label fileEncryption;   
+    @FXML private TableView<IAssetAccount> accountTableView;
+    @FXML private TableColumn<IAssetAccount, String> accountNameTableColumn;
+    @FXML private TableColumn<IAssetAccount, String> nymNameTableColumn;
+    @FXML private TableColumn<IAssetAccount, String> assetNameTableColumn;
+    @FXML private TableColumn<IAssetAccount, String> accountBalanceTableColumn;
+    @FXML private TableColumn<IAssetAccount, String> purseBalanceTableColumn;
+    @FXML private TableColumn<IAssetAccount, String> sentPendingTableColumn;
+    @FXML private TableColumn<IAssetAccount, String> receivedPendingTableColumn;
+    @FXML private TableColumn<IAssetAccount, String> checksPendingTableColumn;
     
     
     @FXML private LocalOpenTransactionsWallet wallet;
@@ -81,8 +94,14 @@ public class LocalOpenTransactionsWalletController extends DefaultFXMLController
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {  
-
-		
+	    accountNameTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("accountName"));
+	    nymNameTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("nymName"));
+	    assetNameTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("assetName"));
+	    accountBalanceTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("accountBalance"));
+	    purseBalanceTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("purseBalance"));
+	    sentPendingTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("sentPending"));
+	    receivedPendingTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("receivedPending"));
+	    checksPendingTableColumn.setCellValueFactory(new PropertyValueFactory<IAssetAccount, String>("checksPending"));		
 	}
 	
 	
@@ -109,6 +128,15 @@ public class LocalOpenTransactionsWalletController extends DefaultFXMLController
     	}catch(Exception e){
     		if(this.fileSize != null){this.fileSize.setText("Unable to access wallet");}
     	}    	
+    	
+    	this.wallet.walletStateChangedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+				if(arg0.getValue() == true){
+					accountTableView.setItems(FXCollections.observableList(wallet.getAssetAccounts()));
+					wallet.indicateWalletStateChangeCompleted();
+				}
+			}
+		});
     }
     
     /**

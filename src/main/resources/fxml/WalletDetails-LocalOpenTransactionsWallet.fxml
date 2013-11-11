@@ -14,7 +14,7 @@
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
           <children>
-            <fx:include source="WalletDetails.fxml" fx:id="generalWalletDetails" />
+            <fx:include fx:id="generalWalletDetails" source="WalletDetails.fxml" />
           </children>
         </AnchorPane>
       </content>
@@ -49,7 +49,22 @@
     </Tab>
     <Tab fx:id="accountsTab" text="Accounts">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <children>
+            <TableView fx:id="accountTableView" prefHeight="286.0" prefWidth="592.0" tableMenuButtonVisible="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+              <columns>
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="175.0" text="Account Name" fx:id="accountNameTableColumn" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="122.0" text="Owner Alias" fx:id="nymNameTableColumn" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="139.0" resizable="true" text="Asset Type" fx:id="assetNameTableColumn" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="140.0" text="Account Balance" fx:id="accountBalanceTableColumn" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="117.0" text="Purse Balance" fx:id="purseBalanceTableColumn" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="124.0" text="Sent / Pending" fx:id="sentPendingTableColumn" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="182.0" text="Received / Pending" fx:id="receivedPendingTableColumn" />
+                <TableColumn prefWidth="75.0" text="Checks / Pending" fx:id="checksPendingTableColumn" />
+              </columns>
+            </TableView>
+          </children>
+        </AnchorPane>
       </content>
     </Tab>
   </tabs>

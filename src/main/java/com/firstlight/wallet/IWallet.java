@@ -1,6 +1,9 @@
 package com.firstlight.wallet;
 
 import java.util.HashMap;
+import java.util.List;
+
+import javafx.beans.property.ReadOnlyBooleanProperty;
 
 import com.firstlight.service.IWalletService;
 
@@ -30,6 +33,14 @@ public interface IWallet {
 	WalletState closeWallet();
 	HashMap<String, IWallet> getListOfKnownWallets();
 
+	List<IAssetAccount> getAssetAccounts();
+	void setAssetAccounts(List<IAssetAccount> assetAccounts);
 
+	
+	Boolean getWalletStateChanged();
+	ReadOnlyBooleanProperty walletStateChangedProperty();
+	void indicateWalletStateChangeStarted();
+	void indicateWalletStateChangeCompleted();
+	
 	
 }
